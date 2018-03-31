@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		C085CFBB206F1DF5006AE17C /* RCTZebraScanners.m in Sources */ = {isa = PBXBuildFile; fileRef = C085CFBA206F1DF5006AE17C /* RCTZebraScanners.m */; };
 		C085CFBC206F1DF5006AE17C /* RCTZebraScanners.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C085CFB9206F1DF5006AE17C /* RCTZebraScanners.h */; };
+		C085D098206F2648006AE17C /* ScannerAppEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = C085D097206F2648006AE17C /* ScannerAppEngine.m */; };
+		C085D09A206F26E6006AE17C /* libsymbolbt-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C085D099206F26E6006AE17C /* libsymbolbt-sdk.a */; };
+		C085D09D206F2816006AE17C /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C085D09C206F2816006AE17C /* ExternalAccessory.framework */; };
+		C085D09F206F281E006AE17C /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C085D09E206F281E006AE17C /* CoreBluetooth.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +32,11 @@
 		C085CFB6206F1DF5006AE17C /* libRCTZebraScanners.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTZebraScanners.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C085CFB9206F1DF5006AE17C /* RCTZebraScanners.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTZebraScanners.h; sourceTree = "<group>"; };
 		C085CFBA206F1DF5006AE17C /* RCTZebraScanners.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTZebraScanners.m; sourceTree = "<group>"; };
+		C085D096206F2648006AE17C /* ScannerAppEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ScannerAppEngine.h; sourceTree = "<group>"; };
+		C085D097206F2648006AE17C /* ScannerAppEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ScannerAppEngine.m; sourceTree = "<group>"; };
+		C085D099206F26E6006AE17C /* libsymbolbt-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsymbolbt-sdk.a"; path = "symbolbt-sdk/libsymbolbt-sdk.a"; sourceTree = "<group>"; };
+		C085D09C206F2816006AE17C /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/ExternalAccessory.framework; sourceTree = DEVELOPER_DIR; };
+		C085D09E206F281E006AE17C /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/CoreBluetooth.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -35,6 +44,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C085D09F206F281E006AE17C /* CoreBluetooth.framework in Frameworks */,
+				C085D09D206F2816006AE17C /* ExternalAccessory.framework in Frameworks */,
+				C085D09A206F26E6006AE17C /* libsymbolbt-sdk.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +58,7 @@
 			children = (
 				C085CFB8206F1DF5006AE17C /* RCTZebraScanners */,
 				C085CFB7206F1DF5006AE17C /* Products */,
+				C085D09B206F2708006AE17C /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -62,8 +75,20 @@
 			children = (
 				C085CFB9206F1DF5006AE17C /* RCTZebraScanners.h */,
 				C085CFBA206F1DF5006AE17C /* RCTZebraScanners.m */,
+				C085D096206F2648006AE17C /* ScannerAppEngine.h */,
+				C085D097206F2648006AE17C /* ScannerAppEngine.m */,
 			);
 			path = RCTZebraScanners;
+			sourceTree = "<group>";
+		};
+		C085D09B206F2708006AE17C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				C085D09E206F281E006AE17C /* CoreBluetooth.framework */,
+				C085D09C206F2816006AE17C /* ExternalAccessory.framework */,
+				C085D099206F26E6006AE17C /* libsymbolbt-sdk.a */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -121,6 +146,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C085D098206F2648006AE17C /* ScannerAppEngine.m in Sources */,
 				C085CFBB206F1DF5006AE17C /* RCTZebraScanners.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -193,6 +219,10 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/symbolbt-sdk",
+				);
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_LDFLAGS = "-ObjC";
@@ -200,6 +230,7 @@
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/symbolbt-sdk/include/\"";
 			};
 			name = Debug;
 		};
@@ -250,12 +281,17 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/symbolbt-sdk",
+				);
 				MTL_ENABLE_DEBUG_INFO = NO;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = YES;
 				TARGETED_DEVICE_FAMILY = "1,2";
+				USER_HEADER_SEARCH_PATHS = "\"$(SRCROOT)/symbolbt-sdk/include/\"";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
