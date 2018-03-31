@@ -19,7 +19,8 @@
   "homepage": "https://github.com/totemacoustic/react-native-zebra-scanners#readme",
   "scripts": {
     "example:start": "cd example && node node_modules/react-native/local-cli/cli.js start",
-    "example:run-ios": "cd example && node_modules/.bin/react-native run-ios"
+    "example:run-ios": "cd example && node_modules/.bin/react-native run-ios",
+    "example:update": "rm -rf example/node_modules/react-native-zebra-scanners/ios && rm -f example/node_modules/react-native-zebra-scanners/index.js && cp -R ios example/node_modules/react-native-zebra-scanners/ios && cp index.js example/node_modules/react-native-zebra-scanners/index.js"
   },
   "peerDependencies": {
     "react-native": ">=0.54.4"
