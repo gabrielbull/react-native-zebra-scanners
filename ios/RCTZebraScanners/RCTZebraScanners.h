@@ -7,7 +7,10 @@
 
 #import <Foundation/Foundation.h>
 #import <React/RCTBridgeModule.h>
+#import "SbtSdkFactory.h"
 
 @interface RCTZebraScanners : NSObject <RCTBridgeModule>
+
+@property id <ISbtSdkApi> apiInstance;
 
 @end

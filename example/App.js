@@ -4,7 +4,8 @@ import {
   StyleSheet,
   Text,
   View,
-  NativeModules
+  NativeModules,
+  Image
 } from 'react-native';
 import ZebraScanners from 'react-native-zebra-scanners'
 
@@ -16,8 +17,23 @@ const instructions = Platform.select({
 });
 
 export default class App extends Component {
+  state = {
+    imageBase64: null
+  }
+
   componentDidMount() {
     ZebraScanners.hello('world')
+    console.log(ZebraScanners)
+    ZebraScanners.getPairingBarCode({
+      protocol: 'STC_SSI_BLE',
+      width: 300,
+      height: 100
+    })
+      .then((data) => {
+        this.setState({ imageBase64: data })
+        console.log(data)
+      })
+      .catch(() => console.log('error'))
   }
 
   render() {
@@ -32,6 +48,9 @@ export default class App extends Component {
         <Text style={styles.instructions}>
           {instructions}
         </Text>
+        {this.state.imageBase64 ? (
+          <Image style={{width: 300, height: 100, borderWidth: 1, borderColor: 'red'}} source={{uri: `data:image/png;base64,${this.state.imageBase64}`}}/>
+        ) : null}
       </View>
     );
   }
@@ -42,7 +61,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#F5FCFF',
+    backgroundColor: 'purple',
   },
   welcome: {
     fontSize: 20,
