@@ -1,22 +1,27 @@
 {
-  "name": "RCTZebraScanners",
-  "version": "0.0.1",
+  "name": "react-native-zebra-scanners",
+  "version": "0.1.0",
   "private": true,
+  "description": "Zebra Scanners SDK for React Native",
+  "license": "UNLICENSED",
+  "author": {
+    "name" : "Gabriel Bull",
+    "email" : "me@gabrielbull.com"
+  },
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/totemacoustic/react-native-zebra-scanners.git"
+  },
+  "bugs": {
+    "url": "https://github.com/totemacoustic/react-native-zebra-scanners/issues"
+  },
+  "homepage": "https://github.com/totemacoustic/react-native-zebra-scanners#readme",
   "scripts": {
-    "start": "node node_modules/react-native/local-cli/cli.js start",
-    "test": "jest"
+    "example:start": "node node_modules/react-native/local-cli/cli.js start",
+    "example:run-ios": "node_modules/.bin/react-native run-ios"
   },
-  "dependencies": {
-    "react": "^16.3.0-alpha.1",
-    "react-native": "0.54.4"
-  },
-  "devDependencies": {
-    "babel-jest": "22.4.3",
-    "babel-preset-react-native": "4.0.0",
-    "jest": "22.4.3",
-    "react-test-renderer": "^16.3.0-alpha.1"
-  },
-  "jest": {
-    "preset": "react-native"
+  "peerDependencies": {
+    "react-native": ">=0.54.4"
   }
 }

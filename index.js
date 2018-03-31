@@ -1,4 +1,2 @@
-import { AppRegistry } from 'react-native';
-import App from './App';
-
-AppRegistry.registerComponent('RCTZebraScanners', () => App);
+import { NativeModules } from 'react-native';
+export default NativeModules.RTCZebraScanners;
