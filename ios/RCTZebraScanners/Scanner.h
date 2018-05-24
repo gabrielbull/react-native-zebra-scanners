@@ -9,6 +9,6 @@
 @property id <ISbtSdkApi> apiInstance;
 
 - (NSString *)sbtGetVersion;
-- (NSMutableArray *)getAvailableScanners;
+- (NSMutableArray *)getScanners;
 
 @end

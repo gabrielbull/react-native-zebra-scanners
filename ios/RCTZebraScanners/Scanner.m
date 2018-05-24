@@ -31,54 +31,63 @@
     return [self.apiInstance sbtGetVersion];
 }
 
-- (NSMutableArray *)getAvailableScanners
+- (NSMutableArray *)getScanners
 {
-    NSMutableArray *newArray = [NSMutableArray array];
-    [scannerList enumerateObjectsUsingBlock:^(SbtScannerInfo *availableScanner, NSUInteger idx, BOOL *stop) {
-        // const NSObject *newObject = [Serializer serializeAvailableScanner:availableScanner];
-        [newArray addObject:[Serializer serializeAvailableScanner:availableScanner]];
+    NSMutableArray *scanners = [NSMutableArray array];
+    [scannerList enumerateObjectsUsingBlock:^(SbtScannerInfo *scanner, NSUInteger idx, BOOL *stop) {
+        [scanners addObject:[Serializer serializeScanner:scanner]];
     }];
 
-    return newArray;
+    return scanners;
 }
 
 - (void)sbtEventScannerAppeared:(SbtScannerInfo*)availableScanner
 {
     BOOL found = NO;
-
-    for (SbtScannerInfo *ex_info in [scannerList copy])
+    SbtScannerInfo *scanner;
+    
+    for (SbtScannerInfo *item in [scannerList copy])
     {
-        if ([ex_info getScannerID] == [availableScanner getScannerID])
+        if ([item getScannerID] == [availableScanner getScannerID])
         {
-            /* find scanner with ID in dev list */
-            [ex_info setActive:NO];
-            [ex_info setAvailable:YES];
-            [ex_info setAutoCommunicationSessionReestablishment:[availableScanner getAutoCommunicationSessionReestablishment]];
-            [ex_info setConnectionType:[availableScanner getConnectionType]];
+            [item setActive:NO];
+            [item setAvailable:YES];
+            [item setAutoCommunicationSessionReestablishment:[availableScanner getAutoCommunicationSessionReestablishment]];
+            [item setConnectionType:[availableScanner getConnectionType]];
             found = YES;
+            scanner = item;
             break;
         }
     }
     
     if (found == NO)
     {
-        SbtScannerInfo *scanner_info = [[SbtScannerInfo alloc] init];
-        [scanner_info setActive:NO];
-        [scanner_info setAvailable:YES];
-        [scanner_info setScannerID:[availableScanner getScannerID]];
-        [scanner_info setAutoCommunicationSessionReestablishment:[availableScanner getAutoCommunicationSessionReestablishment]];
-        [scanner_info setConnectionType:[availableScanner getConnectionType]];
-        [scanner_info setScannerName:[availableScanner getScannerName]];
-        [scanner_info setScannerModel:[availableScanner getScannerModel]];
-        [scannerList addObject:scanner_info];
+        scanner = [[SbtScannerInfo alloc] init];
+        [scanner setActive:NO];
+        [scanner setAvailable:YES];
+        [scanner setScannerID:[availableScanner getScannerID]];
+        [scanner setAutoCommunicationSessionReestablishment:[availableScanner getAutoCommunicationSessionReestablishment]];
+        [scanner setConnectionType:[availableScanner getConnectionType]];
+        [scanner setScannerName:[availableScanner getScannerName]];
+        [scanner setScannerModel:[availableScanner getScannerModel]];
+        [scannerList addObject:scanner];
     }
 
-    [RCTZebraScannersEvents onScannerAppeared:availableScanner];
+    [RCTZebraScannersEvents onScannerAppeared:scanner];
 }
 
 - (void)sbtEventScannerDisappeared:(int)scannerID
 {
-    NSLog(@"✳️✳️✳️ ARXXC: Event Scanner Disappeared");
+    for (SbtScannerInfo *scanner in [scannerList copy])
+    {
+        if ([scanner getScannerID] == scannerID)
+        {
+            [scanner setAvailable:NO];
+            break;
+        }
+    }
+    
+    [RCTZebraScannersEvents onScannerDisappeared:scannerID];
 }
 
 - (void)sbtEventCommunicationSessionEstablished:(SbtScannerInfo*)activeScanner

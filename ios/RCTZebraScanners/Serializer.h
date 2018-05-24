@@ -2,5 +2,5 @@
 #import "SbtSdkFactory.h"
 
 @interface Serializer : NSObject
-+ (NSDictionary *)serializeAvailableScanner:(SbtScannerInfo*)availableScanner;
++ (NSDictionary *)serializeScanner:(SbtScannerInfo*)scanner;
 @end

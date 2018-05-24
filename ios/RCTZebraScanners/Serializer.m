@@ -2,16 +2,16 @@
 
 @implementation Serializer
 # pragma mark Public
-+ (NSDictionary *)serializeAvailableScanner:(SbtScannerInfo*)availableScanner
++ (NSDictionary *)serializeScanner:(SbtScannerInfo*)scanner
 {
     return @{
-        @"active": @NO,
-        @"available": @YES,
-        @"scanner_id": [NSNumber numberWithInt:[availableScanner getScannerID]],
-        @"auto_communcation_session_reestablishment": [NSNumber numberWithBool:[availableScanner getAutoCommunicationSessionReestablishment]],
-        @"connection_type": [NSNumber numberWithInt:[availableScanner getConnectionType]],
-        @"scanner_name": [availableScanner getScannerName],
-        @"scanner_model": [NSNumber numberWithInt:[availableScanner getScannerModel]]
+        @"active": [NSNumber numberWithBool:[scanner isActive]],
+        @"available": [NSNumber numberWithBool:[scanner isAvailable]],
+        @"scanner_id": [NSNumber numberWithInt:[scanner getScannerID]],
+        @"auto_communcation_session_reestablishment": [NSNumber numberWithBool:[scanner getAutoCommunicationSessionReestablishment]],
+        @"connection_type": [NSNumber numberWithInt:[scanner getConnectionType]],
+        @"scanner_name": [scanner getScannerName],
+        @"scanner_model": [NSNumber numberWithInt:[scanner getScannerModel]]
     };
 }
 @end

@@ -2,6 +2,7 @@
 #import "Serializer.h"
 
 NSString *const SCANNER_APPEARED = @"ZebraScanners/ScannerAppeared";
+NSString *const SCANNER_DISAPPEARED = @"ZebraScanners/ScannerDisappeard";
 
 @implementation RCTZebraScannersEvents
 
@@ -9,12 +10,15 @@ RCT_EXPORT_MODULE();
 
 - (NSDictionary *)constantsToExport
 {
-    return @{ @"SCANNER_APPEARED": SCANNER_APPEARED };
+    return @{
+         @"SCANNER_APPEARED": SCANNER_APPEARED,
+         @"SCANNER_DISAPPEARED": SCANNER_DISAPPEARED
+    };
 }
 
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[@"EventReminder", SCANNER_APPEARED];
+    return @[SCANNER_APPEARED, SCANNER_DISAPPEARED];
 }
 
 - (void)startObserving {
@@ -33,9 +37,13 @@ RCT_EXPORT_MODULE();
 # pragma mark Public
 + (BOOL)onScannerAppeared:(SbtScannerInfo*)availableScanner
 {
-    NSDictionary<NSString *, id> *payload = @{@"scanner": [Serializer serializeAvailableScanner:availableScanner]};
+    [self postNotificationName:SCANNER_APPEARED withPayload:@{@"scanner": [Serializer serializeScanner:availableScanner]}];
+    return YES;
+}
 
-    [self postNotificationName:SCANNER_APPEARED withPayload:payload];
++ (BOOL)onScannerDisappeared:(int)scannerID
+{
+    [self postNotificationName:SCANNER_DISAPPEARED withPayload:@{@"scannerId": [NSNumber numberWithInt:scannerID]}];
     return YES;
 }
 

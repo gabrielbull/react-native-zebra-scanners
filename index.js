@@ -5,8 +5,8 @@ const calendarManagerEmitter = new NativeEventEmitter(NativeModules.ZebraScanner
 export default {
     sdkVersion: NativeModules.ZebraScanners.sdkVersion,
     
-    getAvailableScanners: () => {
-        return NativeModules.ZebraScanners.getAvailableScanners()    
+    getScanners: () => {
+        return NativeModules.ZebraScanners.getScanners()    
     },
     
     getPairingBarCode: (params) => {

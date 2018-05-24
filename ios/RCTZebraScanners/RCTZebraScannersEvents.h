@@ -5,5 +5,6 @@
 @interface RCTZebraScannersEvents : RCTEventEmitter <RCTBridgeModule>
 
 + (BOOL)onScannerAppeared:(SbtScannerInfo*)availableScanner;
++ (BOOL)onScannerDisappeared:(int)scannerID;
 
 @end
