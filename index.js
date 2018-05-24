@@ -1,20 +1,24 @@
-import { NativeModules } from 'react-native';
+import { NativeModules, NativeEventEmitter } from 'react-native';
 
-export const sdkVersion = NativeModules.ZebraScanners.sdkVersion
+console.log(NativeModules)
 
-export function getPairingBarCode(params) {
-    params = {
-        protocol: 'STC_SSI_BLE',
-        defaultStatus: true,    
-        ...params
-    }
-    return NativeModules.ZebraScanners.getPairingBarCode(params)
-}
+const calendarManagerEmitter = new NativeEventEmitter(NativeModules.ZebraScannersEvents);
 
-export function getResetFactoryDefaultsBarcode(params) {
-    return NativeModules.ZebraScanners.getResetFactoryDefaultsBarcode(params)
-}
-
-export function getBtleSsiBarcode(params) {
-    return NativeModules.ZebraScanners.getBtleSsiBarcode(params)
+const subscription = calendarManagerEmitter.addListener(
+    'EventReminder',
+    (reminder) => console.log(reminder)
+  );
+  
+export default {
+    sdkVersion: NativeModules.ZebraScanners.sdkVersion,
+    getPairingBarCode: (params) => {
+        params = {
+            protocol: 'STC_SSI_BLE',
+            defaultStatus: true,    
+            ...params
+        }
+        return NativeModules.ZebraScanners.getPairingBarCode(params)    
+    },
+    getResetFactoryDefaultsBarcode: (params) => NativeModules.ZebraScanners.getResetFactoryDefaultsBarcode(params),
+    getBtleSsiBarcode: (params) => NativeModules.ZebraScanners.getBtleSsiBarcode(params)
 }

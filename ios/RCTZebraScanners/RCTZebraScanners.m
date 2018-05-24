@@ -2,6 +2,7 @@
 #import <React/RCTLog.h>
 #import <React/RCTConvert.h>
 #import "BarcodeImage.h"
+#import "RCTZebraScannersEvents.h"
 
 @implementation RCTZebraScanners
 
@@ -10,6 +11,11 @@ RCT_EXPORT_MODULE();
 - (id)init {
     self = [super init];
     self.scannerSdk = [[Scanner alloc] init];
+    
+    [RCTZebraScannersEvents didSightBeacon];
+
+    [RCTZebraScannersEvents performSelector:@selector(didSightBeacon) withObject:nil afterDelay:3.0 ];
+
     return self;
 }
 

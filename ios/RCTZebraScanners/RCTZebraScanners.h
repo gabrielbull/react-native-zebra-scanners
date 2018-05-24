@@ -5,6 +5,5 @@
 @interface RCTZebraScanners : NSObject <RCTBridgeModule>
 
 @property (strong) Scanner *scannerSdk;
-@property (strong) RCTZebraScannersEvents *events;
 
 @end
