@@ -30,39 +30,30 @@ RCT_EXPORT_MODULE();
 }
 
 # pragma mark Public
-+ (BOOL)didSightBeacon
-{
-    NSString *beaconID = @"men wow";
-    NSLog(@"⚛️⚛️⚛️ ARXXC: didSightBeacon");
-    [self postNotificationName:@"EventReminder" withPayload:beaconID];
-    return YES;
-}
-
 + (BOOL)onScannerAppeared:(SbtScannerInfo*)availableScanner
 {
-    [self postNotificationName:SCANNER_APPEARED withPayload:@{
-                                                              @"active": @NO,
-                                                              @"available": @YES,
-                                                              @"scanner_id": [NSNumber numberWithInt:[availableScanner getScannerID]],
-                                                              @"auto_communcation_session_reestablishment": [NSNumber numberWithBool:[availableScanner getAutoCommunicationSessionReestablishment]],
-                                                              @"connection_type": [NSNumber numberWithInt:[availableScanner getConnectionType]],
-                                                              @"scanner_name": [availableScanner getScannerName],
-                                                              @"scanner_model": [NSNumber numberWithInt:[availableScanner getScannerModel]]
-                                                              }];
+    NSDictionary<NSString *, id> *payload = @{@"scanner": @{
+                                              @"active": @NO,
+                                              @"available": @YES,
+                                              @"scanner_id": [NSNumber numberWithInt:[availableScanner getScannerID]],
+                                              @"auto_communcation_session_reestablishment": [NSNumber numberWithBool:[availableScanner getAutoCommunicationSessionReestablishment]],
+                                              @"connection_type": [NSNumber numberWithInt:[availableScanner getConnectionType]],
+                                              @"scanner_name": [availableScanner getScannerName],
+                                              @"scanner_model": [NSNumber numberWithInt:[availableScanner getScannerModel]]
+                                              }};
+
+    [self postNotificationName:SCANNER_APPEARED withPayload:payload];
     return YES;
 }
 
 # pragma mark Private
-+ (void)postNotificationName:(NSString *)name withPayload:(NSObject *)object {
-    NSDictionary<NSString *, id> *payload = @{@"payload": object};
-    
++ (void)postNotificationName:(NSString *)name withPayload:(NSDictionary<NSString *, id> *)payload {
     [[NSNotificationCenter defaultCenter] postNotificationName:name
                                                         object:self
                                                       userInfo:payload];
 }
 
 - (void)handleNotification:(NSNotification *)notification {
-    NSLog(@"⚛️⚛️⚛️ ARXXC: handleNotification");
     [self sendEventWithName:notification.name body:notification.userInfo];
 }
 

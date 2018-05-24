@@ -4,7 +4,6 @@
 
 @interface RCTZebraScannersEvents : RCTEventEmitter <RCTBridgeModule>
 
-+ (BOOL)didSightBeacon;
 + (BOOL)onScannerAppeared:(SbtScannerInfo*)availableScanner;
 
 @end

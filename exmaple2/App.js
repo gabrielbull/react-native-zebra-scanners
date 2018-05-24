@@ -24,7 +24,7 @@ export default class App extends Component {
 
   componentDidMount() {
     console.log(ZebraScanners)
-
+        
     ZebraScanners.getResetFactoryDefaultsBarcode({
       width: 300,
       height: 100
@@ -38,6 +38,16 @@ export default class App extends Component {
     })
       .then((data) => this.setState({ btleSsiBarcode: data }))
       .catch(() => console.log('error'))
+
+    ZebraScanners.addEventListener('SCANNER_APPEARED', this.handleScannerAppeared)
+  }
+
+  componentWillUnmount() {
+    ZebraScanners.removeEventListener('SCANNER_APPEARED', this.handleScannerAppeared)
+  }
+
+  handleScannerAppeared = (scanner) => {
+    console.log(scanner)
   }
 
   render() {

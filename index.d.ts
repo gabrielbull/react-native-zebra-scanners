@@ -24,4 +24,23 @@ declare module "react-native-zebra-scanners" {
     }
 
     export function getBtleSsiBarcode(params: BtleSsiBarcodeParams): Promise<URISource>;
+
+    export type EVENT = 'SCANNER_APPEARED';
+
+    export type AvailableScanner = {
+        active: boolean
+        auto_communcation_session_reestablishment: boolean,
+        available: boolean,
+        connection_type: number,
+        scanner_id: number,
+        scanner_model: number,
+        scanner_name: string
+    }
+
+    export type ScannerAppearedEvent = {
+        scanner: AvailableScanner
+    }
+
+    export function addEventListener(event: EVENT, callback: Function): void;
+    export function removeEventListener(event: EVENT, callback: Function): void;
 }
