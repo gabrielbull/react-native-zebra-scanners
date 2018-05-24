@@ -1,12 +1,19 @@
 #import "RCTZebraScannersEvents.h"
 
+NSString *const SCANNER_APPEARED = @"ZebraScanners/ScannerAppeared";
+
 @implementation RCTZebraScannersEvents
 
 RCT_EXPORT_MODULE();
 
+- (NSDictionary *)constantsToExport
+{
+    return @{ @"SCANNER_APPEARED": SCANNER_APPEARED };
+}
+
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[@"EventReminder"];
+    return @[@"EventReminder", SCANNER_APPEARED];
 }
 
 - (void)startObserving {
@@ -22,18 +29,26 @@ RCT_EXPORT_MODULE();
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
-- (void)calendarEventReminderReceived:(NSNotification *)notification
-{
-    NSString *eventName = notification.userInfo[@"name"];
-    [self sendEventWithName:@"EventReminder" body:@{@"name": eventName}];
-}
-
 # pragma mark Public
 + (BOOL)didSightBeacon
 {
     NSString *beaconID = @"men wow";
-    NSLog(@"✳️✳️✳️ ARXXC: Event Scanner Appeared");
+    NSLog(@"⚛️⚛️⚛️ ARXXC: didSightBeacon");
     [self postNotificationName:@"EventReminder" withPayload:beaconID];
+    return YES;
+}
+
++ (BOOL)onScannerAppeared:(SbtScannerInfo*)availableScanner
+{
+    [self postNotificationName:SCANNER_APPEARED withPayload:@{
+                                                              @"active": @NO,
+                                                              @"available": @YES,
+                                                              @"scanner_id": [NSNumber numberWithInt:[availableScanner getScannerID]],
+                                                              @"auto_communcation_session_reestablishment": [NSNumber numberWithBool:[availableScanner getAutoCommunicationSessionReestablishment]],
+                                                              @"connection_type": [NSNumber numberWithInt:[availableScanner getConnectionType]],
+                                                              @"scanner_name": [availableScanner getScannerName],
+                                                              @"scanner_model": [NSNumber numberWithInt:[availableScanner getScannerModel]]
+                                                              }];
     return YES;
 }
 
@@ -47,7 +62,7 @@ RCT_EXPORT_MODULE();
 }
 
 - (void)handleNotification:(NSNotification *)notification {
-    NSLog(@"✳️✳️✳️ ARXXC: Event Scanner Appeared");
+    NSLog(@"⚛️⚛️⚛️ ARXXC: handleNotification");
     [self sendEventWithName:notification.name body:notification.userInfo];
 }
 

@@ -1,5 +1,6 @@
 #import "Scanner.h"
 #import "SbtSdkFactory.h"
+#import "RCTZebraScannersEvents.h"
 
 @implementation Scanner
 
@@ -29,6 +30,7 @@
 
 - (void)sbtEventScannerAppeared:(SbtScannerInfo*)availableScanner
 {
+    [RCTZebraScannersEvents onScannerAppeared:availableScanner];
     NSLog(@"✳️✳️✳️ ARXXC: Event Scanner Appeared");
 }
 
