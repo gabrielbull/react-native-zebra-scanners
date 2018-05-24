@@ -1,14 +1,6 @@
-/**
- * Copyright (c) 2018-present, Gabriel Bull
- * All rights reserved.
- *
- * This source code is private and unlicensed. Do not use or modify.
- */
-
 #import "RCTZebraScanners.h"
 #import <React/RCTLog.h>
 #import <React/RCTConvert.h>
-#import "ScannerSDK.h"
 #import "BarcodeImage.h"
 
 @implementation RCTZebraScanners
@@ -16,18 +8,14 @@
 RCT_EXPORT_MODULE();
 
 - (id)init {
-    self.scannerSdk = [[ScannerSDK alloc] init];
+    self = [super init];
+    self.scannerSdk = [[Scanner alloc] init];
     return self;
 }
 
 - (NSDictionary *)constantsToExport
 {
     return @{ @"sdkVersion": [self.scannerSdk sbtGetVersion] };
-}
-
-RCT_EXPORT_METHOD(hello:(NSString *)value)
-{
-    RCTLogInfo(@"Hello %@", value);
 }
 
 RCT_REMAP_METHOD(getPairingBarcode,

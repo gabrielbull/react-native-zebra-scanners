@@ -23,9 +23,8 @@ export default class App extends Component {
   }
 
   componentDidMount() {
-    ZebraScanners.hello('world')
     console.log(ZebraScanners)
-    
+
     ZebraScanners.getResetFactoryDefaultsBarcode({
       width: 300,
       height: 100

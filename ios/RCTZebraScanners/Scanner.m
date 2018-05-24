@@ -1,24 +1,19 @@
-//
-//  NSObject+ScannerSDK.m
-//  RCTZebraScanners
-//
-//  Created by Gabriel Bull on 18-05-23.
-//
-
-#import "ScannerSDK.h"
+#import "Scanner.h"
 #import "SbtSdkFactory.h"
 
-@implementation ScannerSDK
+@implementation Scanner
 
-- (id)init {
+- (id)init
+{
     self.apiInstance = [SbtSdkFactory createSbtSdkApiInstance];
+    [self.apiInstance sbtSetDelegate:self];
+    
     [self.apiInstance sbtSetOperationalMode:SBT_OPMODE_ALL];
     
     int notifications_mask = 0;
     notifications_mask |= (SBT_EVENT_SCANNER_APPEARANCE | SBT_EVENT_SCANNER_DISAPPEARANCE | SBT_EVENT_SESSION_ESTABLISHMENT | SBT_EVENT_SESSION_TERMINATION | SBT_EVENT_BARCODE | SBT_EVENT_IMAGE | SBT_EVENT_VIDEO);
     
     [self.apiInstance sbtSubsribeForEvents:notifications_mask];
-    
     
     BOOL scanner_detection = true;
     
@@ -34,28 +29,32 @@
 
 - (void)sbtEventScannerAppeared:(SbtScannerInfo*)availableScanner
 {
-    
-    printf("NEW SCANNNERRRR-------");
+    NSLog(@"✳️✳️✳️ ARXXC: Event Scanner Appeared");
 }
 
 - (void)sbtEventScannerDisappeared:(int)scannerID
 {
+    NSLog(@"✳️✳️✳️ ARXXC: Event Scanner Disappeared");
 }
 
 - (void)sbtEventCommunicationSessionEstablished:(SbtScannerInfo*)activeScanner
 {
-}
-
-- (void)blinkLEDOff
-{
-}
-
-- (void)blinkLEDON
-{
+    NSLog(@"✳️✳️✳️ ARXXC: Communication session established");
 }
 
 - (void)sbtEventCommunicationSessionTerminated:(int)scannerID
 {
+    NSLog(@"✳️✳️✳️ ARXXC: Communication session terminated");
+}
+
+- (void)blinkLEDOff
+{
+    NSLog(@"✳️✳️✳️ ARXXC: BLink LED off");
+}
+
+- (void)blinkLEDON
+{
+    NSLog(@"✳️✳️✳️ ARXXC: BLink LED on");
 }
 
 - (void) sbtEventBarcode:(NSString *)barcodeData barcodeType:(int)barcodeType fromScanner:(int)scannerID
@@ -65,35 +64,43 @@
 
 - (void)sbtEventBarcodeData:(NSData*)barcodeData barcodeType:(int)barcodeType fromScanner:(int)scannerID
 {
+    NSLog(@"✳️✳️✳️ ARXXC: Event barcode data");
 }
 
 - (void)sbtEventFirmwareUpdate:(FirmwareUpdateEvent *)fwUpdateEventObj
 {
+    NSLog(@"✳️✳️✳️ ARXXC: Event firmware update");
 }
 
 - (void)sbtEventImage:(NSData *)imageData fromScanner:(int)scannerID {
+    NSLog(@"✳️✳️✳️ ARXXC: Event image data");
 }
 
 
 - (void)sbtEventVideo:(NSData *)videoFrame fromScanner:(int)scannerID {
+    NSLog(@"✳️✳️✳️ ARXXC: Event video data");
 }
 
 - (BOOL)firmwareDidUpdate
 {
+    NSLog(@"✳️✳️✳️ ARXXC: Firmware did update");
     return false;
 }
 
 - (int)previousScannerId
 {
+    NSLog(@"✳️✳️✳️ ARXXC: Previous scanner id");
     return 1;
 }
 
 - (void)setFirmwareDidUpdate:(BOOL)updateStatus
 {
+    NSLog(@"✳️✳️✳️ ARXXC: Se firmware did update");
 }
 
 - (void)previousScannerpreviousScanner:(int)scannerIdStatus
 {
+    NSLog(@"✳️✳️✳️ ARXXC: Se firmware did update");
 }
 
 @end

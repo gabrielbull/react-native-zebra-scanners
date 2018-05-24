@@ -7,12 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C00F20CF20B5F888000130EE /* ScannerSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = C00F20CE20B5F888000130EE /* ScannerSDK.m */; };
+		C00F20CF20B5F888000130EE /* Scanner.m in Sources */ = {isa = PBXBuildFile; fileRef = C00F20CE20B5F888000130EE /* Scanner.m */; };
 		C029294E20B3B08100190618 /* BarcodeImage.m in Sources */ = {isa = PBXBuildFile; fileRef = C029294C20B3B08100190618 /* BarcodeImage.m */; };
 		C029295120B3B0AC00190618 /* BarcodeGen128.m in Sources */ = {isa = PBXBuildFile; fileRef = C029295020B3B0AC00190618 /* BarcodeGen128.m */; };
 		C029295520B3B13C00190618 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C029295420B3B13C00190618 /* CoreGraphics.framework */; };
 		C029295720B3B14900190618 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C029295620B3B14900190618 /* Foundation.framework */; };
 		C029295920B3B17F00190618 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C029295820B3B17F00190618 /* UIKit.framework */; };
+		C03FDAF320B6751000CB2776 /* RCTZebraScannersEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C03FDAF220B6751000CB2776 /* RCTZebraScannersEvents.m */; };
 		C085CFBB206F1DF5006AE17C /* RCTZebraScanners.m in Sources */ = {isa = PBXBuildFile; fileRef = C085CFBA206F1DF5006AE17C /* RCTZebraScanners.m */; };
 		C085CFBC206F1DF5006AE17C /* RCTZebraScanners.h in CopyFiles */ = {isa = PBXBuildFile; fileRef = C085CFB9206F1DF5006AE17C /* RCTZebraScanners.h */; };
 		C085D09A206F26E6006AE17C /* libsymbolbt-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C085D099206F26E6006AE17C /* libsymbolbt-sdk.a */; };
@@ -34,8 +35,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		C00F20CD20B5F888000130EE /* ScannerSDK.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ScannerSDK.h; sourceTree = "<group>"; };
-		C00F20CE20B5F888000130EE /* ScannerSDK.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ScannerSDK.m; sourceTree = "<group>"; };
+		C00F20CD20B5F888000130EE /* Scanner.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Scanner.h; sourceTree = "<group>"; };
+		C00F20CE20B5F888000130EE /* Scanner.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Scanner.m; sourceTree = "<group>"; };
 		C029294C20B3B08100190618 /* BarcodeImage.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = BarcodeImage.m; sourceTree = "<group>"; };
 		C029294D20B3B08100190618 /* BarcodeImage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BarcodeImage.h; sourceTree = "<group>"; };
 		C029294F20B3B0AB00190618 /* BarcodeGen128.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BarcodeGen128.h; path = ../../../../../../../../Downloads/ScannerDemoAppSource_v1.3.23/ScannerDemoApp/BarcodeGen128.h; sourceTree = "<group>"; };
@@ -43,6 +44,8 @@
 		C029295420B3B13C00190618 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
 		C029295620B3B14900190618 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 		C029295820B3B17F00190618 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		C03FDAF120B6751000CB2776 /* RCTZebraScannersEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTZebraScannersEvents.h; sourceTree = "<group>"; };
+		C03FDAF220B6751000CB2776 /* RCTZebraScannersEvents.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTZebraScannersEvents.m; sourceTree = "<group>"; };
 		C085CFB6206F1DF5006AE17C /* libRCTZebraScanners.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libRCTZebraScanners.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		C085CFB9206F1DF5006AE17C /* RCTZebraScanners.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTZebraScanners.h; sourceTree = "<group>"; };
 		C085CFBA206F1DF5006AE17C /* RCTZebraScanners.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTZebraScanners.m; sourceTree = "<group>"; };
@@ -94,8 +97,10 @@
 				C029294C20B3B08100190618 /* BarcodeImage.m */,
 				C085CFB9206F1DF5006AE17C /* RCTZebraScanners.h */,
 				C085CFBA206F1DF5006AE17C /* RCTZebraScanners.m */,
-				C00F20CD20B5F888000130EE /* ScannerSDK.h */,
-				C00F20CE20B5F888000130EE /* ScannerSDK.m */,
+				C03FDAF120B6751000CB2776 /* RCTZebraScannersEvents.h */,
+				C03FDAF220B6751000CB2776 /* RCTZebraScannersEvents.m */,
+				C00F20CD20B5F888000130EE /* Scanner.h */,
+				C00F20CE20B5F888000130EE /* Scanner.m */,
 			);
 			path = RCTZebraScanners;
 			sourceTree = "<group>";
@@ -169,9 +174,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				C029294E20B3B08100190618 /* BarcodeImage.m in Sources */,
+				C03FDAF320B6751000CB2776 /* RCTZebraScannersEvents.m in Sources */,
 				C085CFBB206F1DF5006AE17C /* RCTZebraScanners.m in Sources */,
 				C029295120B3B0AC00190618 /* BarcodeGen128.m in Sources */,
-				C00F20CF20B5F888000130EE /* ScannerSDK.m in Sources */,
+				C00F20CF20B5F888000130EE /* Scanner.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
