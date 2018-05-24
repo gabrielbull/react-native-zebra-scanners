@@ -18,21 +18,26 @@ const instructions = Platform.select({
 
 export default class App extends Component {
   state = {
-    imageBase64: null
+    resetBarcode: null,
+    btleSsiBarcode: null
   }
 
   componentDidMount() {
     ZebraScanners.hello('world')
     console.log(ZebraScanners)
-    ZebraScanners.getPairingBarCode({
-      protocol: 'STC_SSI_BLE',
+    
+    ZebraScanners.getResetFactoryDefaultsBarcode({
       width: 300,
       height: 100
     })
-      .then((data) => {
-        this.setState({ imageBase64: data })
-        console.log(data)
-      })
+      .then((data) => this.setState({ resetBarcode: data }))
+      .catch(() => console.log('error'))
+
+    ZebraScanners.getBtleSsiBarcode({
+      width: 300,
+      height: 100
+    })
+      .then((data) => this.setState({ btleSsiBarcode: data }))
       .catch(() => console.log('error'))
   }
 
@@ -48,8 +53,11 @@ export default class App extends Component {
         <Text style={styles.instructions}>
           {instructions}
         </Text>
-        {this.state.imageBase64 ? (
-          <Image style={{width: 300, height: 100, borderWidth: 1, borderColor: 'red'}} source={{uri: `data:image/png;base64,${this.state.imageBase64}`}}/>
+        {this.state.resetBarcode ? (
+          <Image style={{width: 300, height: 100, borderWidth: 1, borderColor: 'red'}} source={{uri: `data:image/png;base64,${this.state.resetBarcode}`}}/>
+        ) : null}
+        {this.state.btleSsiBarcode ? (
+          <Image style={{width: 300, height: 100, borderWidth: 1, borderColor: 'red'}} source={{uri: `data:image/png;base64,${this.state.btleSsiBarcode}`}}/>
         ) : null}
       </View>
     );
