@@ -19,6 +19,7 @@
 		C085D09D206F2816006AE17C /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C085D09C206F2816006AE17C /* ExternalAccessory.framework */; };
 		C085D09F206F281E006AE17C /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C085D09E206F281E006AE17C /* CoreBluetooth.framework */; };
 		C0CD5BDE20B72C54001AC368 /* RCTZebraScannersEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C0CD5BDD20B72C54001AC368 /* RCTZebraScannersEvents.m */; };
+		C0CD5BE120B74E98001AC368 /* Serializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0CD5BE020B74E98001AC368 /* Serializer.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -52,6 +53,8 @@
 		C085D09E206F281E006AE17C /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/CoreBluetooth.framework; sourceTree = DEVELOPER_DIR; };
 		C0CD5BDC20B72C54001AC368 /* RCTZebraScannersEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTZebraScannersEvents.h; sourceTree = "<group>"; };
 		C0CD5BDD20B72C54001AC368 /* RCTZebraScannersEvents.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTZebraScannersEvents.m; sourceTree = "<group>"; };
+		C0CD5BDF20B74E98001AC368 /* Serializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serializer.h; sourceTree = "<group>"; };
+		C0CD5BE020B74E98001AC368 /* Serializer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Serializer.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +104,8 @@
 				C0CD5BDD20B72C54001AC368 /* RCTZebraScannersEvents.m */,
 				C00F20CD20B5F888000130EE /* Scanner.h */,
 				C00F20CE20B5F888000130EE /* Scanner.m */,
+				C0CD5BDF20B74E98001AC368 /* Serializer.h */,
+				C0CD5BE020B74E98001AC368 /* Serializer.m */,
 			);
 			path = RCTZebraScanners;
 			sourceTree = "<group>";
@@ -174,6 +179,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C0CD5BDE20B72C54001AC368 /* RCTZebraScannersEvents.m in Sources */,
+				C0CD5BE120B74E98001AC368 /* Serializer.m in Sources */,
 				C029294E20B3B08100190618 /* BarcodeImage.m in Sources */,
 				C085CFBB206F1DF5006AE17C /* RCTZebraScanners.m in Sources */,
 				C029295120B3B0AC00190618 /* BarcodeGen128.m in Sources */,

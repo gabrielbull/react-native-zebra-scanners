@@ -18,6 +18,13 @@ RCT_EXPORT_MODULE();
     return @{ @"sdkVersion": [self.scannerSdk sbtGetVersion] };
 }
 
+RCT_REMAP_METHOD(getAvailableScanners,
+                 getAvailableScannersWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    resolve([self.scannerSdk getAvailableScanners]);
+}
+
 RCT_REMAP_METHOD(getPairingBarcode,
                  params:(NSDictionary *)params
                  getPairingBarcodeWithResolver:(RCTPromiseResolveBlock)resolve

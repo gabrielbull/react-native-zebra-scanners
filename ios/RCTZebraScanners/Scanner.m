@@ -1,6 +1,7 @@
 #import "Scanner.h"
 #import "SbtSdkFactory.h"
 #import "RCTZebraScannersEvents.h"
+#import "Serializer.h"
 
 @implementation Scanner
 
@@ -8,6 +9,8 @@
 {
     self.apiInstance = [SbtSdkFactory createSbtSdkApiInstance];
     [self.apiInstance sbtSetDelegate:self];
+    
+    scannerList = [[NSMutableArray alloc] init];
     
     [self.apiInstance sbtSetOperationalMode:SBT_OPMODE_ALL];
     
@@ -28,10 +31,49 @@
     return [self.apiInstance sbtGetVersion];
 }
 
+- (NSMutableArray *)getAvailableScanners
+{
+    NSMutableArray *newArray = [NSMutableArray array];
+    [scannerList enumerateObjectsUsingBlock:^(SbtScannerInfo *availableScanner, NSUInteger idx, BOOL *stop) {
+        // const NSObject *newObject = [Serializer serializeAvailableScanner:availableScanner];
+        [newArray addObject:[Serializer serializeAvailableScanner:availableScanner]];
+    }];
+
+    return newArray;
+}
+
 - (void)sbtEventScannerAppeared:(SbtScannerInfo*)availableScanner
 {
+    BOOL found = NO;
+
+    for (SbtScannerInfo *ex_info in [scannerList copy])
+    {
+        if ([ex_info getScannerID] == [availableScanner getScannerID])
+        {
+            /* find scanner with ID in dev list */
+            [ex_info setActive:NO];
+            [ex_info setAvailable:YES];
+            [ex_info setAutoCommunicationSessionReestablishment:[availableScanner getAutoCommunicationSessionReestablishment]];
+            [ex_info setConnectionType:[availableScanner getConnectionType]];
+            found = YES;
+            break;
+        }
+    }
+    
+    if (found == NO)
+    {
+        SbtScannerInfo *scanner_info = [[SbtScannerInfo alloc] init];
+        [scanner_info setActive:NO];
+        [scanner_info setAvailable:YES];
+        [scanner_info setScannerID:[availableScanner getScannerID]];
+        [scanner_info setAutoCommunicationSessionReestablishment:[availableScanner getAutoCommunicationSessionReestablishment]];
+        [scanner_info setConnectionType:[availableScanner getConnectionType]];
+        [scanner_info setScannerName:[availableScanner getScannerName]];
+        [scanner_info setScannerModel:[availableScanner getScannerModel]];
+        [scannerList addObject:scanner_info];
+    }
+
     [RCTZebraScannersEvents onScannerAppeared:availableScanner];
-    NSLog(@"✳️✳️✳️ ARXXC: Event Scanner Appeared");
 }
 
 - (void)sbtEventScannerDisappeared:(int)scannerID

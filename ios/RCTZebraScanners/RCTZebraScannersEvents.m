@@ -1,4 +1,5 @@
 #import "RCTZebraScannersEvents.h"
+#import "Serializer.h"
 
 NSString *const SCANNER_APPEARED = @"ZebraScanners/ScannerAppeared";
 
@@ -32,15 +33,7 @@ RCT_EXPORT_MODULE();
 # pragma mark Public
 + (BOOL)onScannerAppeared:(SbtScannerInfo*)availableScanner
 {
-    NSDictionary<NSString *, id> *payload = @{@"scanner": @{
-                                              @"active": @NO,
-                                              @"available": @YES,
-                                              @"scanner_id": [NSNumber numberWithInt:[availableScanner getScannerID]],
-                                              @"auto_communcation_session_reestablishment": [NSNumber numberWithBool:[availableScanner getAutoCommunicationSessionReestablishment]],
-                                              @"connection_type": [NSNumber numberWithInt:[availableScanner getConnectionType]],
-                                              @"scanner_name": [availableScanner getScannerName],
-                                              @"scanner_model": [NSNumber numberWithInt:[availableScanner getScannerModel]]
-                                              }};
+    NSDictionary<NSString *, id> *payload = @{@"scanner": [Serializer serializeAvailableScanner:availableScanner]};
 
     [self postNotificationName:SCANNER_APPEARED withPayload:payload];
     return YES;
