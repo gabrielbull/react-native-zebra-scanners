@@ -1,19 +1,12 @@
-// @flow
 import * as React from 'react'
-import { RouterContext } from '../containers/Router'
+import { withRouter } from '../containers'
 
 class Route extends React.Component {
   render () {
-    const { render, path } = this.props
-    return (
-      <RouterContext.Consumer>
-        {(router) => {
-          if (path === router.path) return render()
-          return null
-        }}
-      </RouterContext.Consumer>
-    )
+    const { render, path, router } = this.props
+    if (path === router.path) return render()
+    return null
   }
 }
 
-export default Route
+export default withRouter(Route)

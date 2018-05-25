@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react'
 import { View, FlatList, Text, ScrollView, Image } from 'react-native'
 import { ScannersContext } from '../containers/Scanners'

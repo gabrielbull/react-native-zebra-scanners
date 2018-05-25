@@ -1,2 +1,5 @@
 export { default as Scanners } from './Scanners'
 export { default as Router } from './Router'
+export { default as withRouter } from './withRouter'
+export { default as withScanner } from './withScanner'
+export { default as withScanners } from './withScanners'

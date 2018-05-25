@@ -1,12 +1,12 @@
-// @flow
 import * as React from 'react'
 import { View, Text, TouchableHighlight } from 'react-native'
+import { withRouter } from '../containers'
 
 class Component extends React.Component {
   render () {
-    const { scanner } = this.props
+    const { scanner, router } = this.props
     return (
-        <TouchableHighlight onPress={() => null} underlayColor='rgba(85, 9, 85, 0.2)'>
+        <TouchableHighlight onPress={() => router.go({ path: '/scanner', state: { scannerId: scanner.scanner_id } })} underlayColor='rgba(85, 9, 85, 0.2)'>
             <View
                 style={{
                     height: 60,
@@ -45,4 +45,4 @@ class Component extends React.Component {
   }
 }
 
-export default Component
+export default withRouter(Component)

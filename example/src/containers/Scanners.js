@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react'
 import { AsyncStorage } from 'react-native'
 import ZebraScanners from 'react-native-zebra-scanners'

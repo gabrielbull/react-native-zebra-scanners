@@ -1,4 +1,3 @@
-// @flow
 import * as React from 'react'
 import { AsyncStorage } from 'react-native'
 
@@ -10,18 +9,24 @@ class Router extends React.Component {
     }
 
     state = {
-        path: this.props.defaultPath
+        path: this.props.defaultPath,
+        state: undefined
     }
 
     handleGo = (path) => {
-        this.setState({ path })
+        if (typeof path === 'object') {
+            this.setState({ path: path.path, state: path.state })
+        } else {
+            this.setState({ path, state: undefined })
+        }
     }
 
       render () {
           return (
               <RouterContext.Provider value={{
                   go: this.handleGo,
-                  path: this.state.path
+                  path: this.state.path,
+                  state: this.state.state
               }}>
                 {this.props.children}
               </RouterContext.Provider>

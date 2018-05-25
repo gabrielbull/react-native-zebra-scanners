@@ -1,12 +1,11 @@
-// @flow
 import * as React from 'react'
 import { View, FlatList, Text } from 'react-native'
-import { ScannersContext } from '../containers/Scanners'
+import { withScanners } from '../containers'
 import { Header, ScannerListItem, HeaderButton } from '../components'
 
 class List extends React.Component {
   render () {
-    const { children } = this.props
+    const { children, scanners } = this.props
     return (
         <View style={{ flex: 1 }}>
             <Header
@@ -14,9 +13,7 @@ class List extends React.Component {
             >
                 Scanners
             </Header>
-            <ScannersContext.Consumer>
-                {(scanners) => scanners.length ? this.renderList(scanners) : this.renderPlaceholder()}
-            </ScannersContext.Consumer>
+            {scanners.length ? this.renderList(scanners) : this.renderPlaceholder()}
         </View>                
     )
   }
@@ -47,4 +44,4 @@ class List extends React.Component {
   }
 }
 
-export default List
+export default withScanners(List)

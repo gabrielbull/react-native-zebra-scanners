@@ -1,23 +1,18 @@
-// @flow
 import * as React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
-import { RouterContext } from '../containers/Router'
+import { withRouter } from '../containers'
 
 class HeaderButton extends React.Component {
   render () {
-    const { children, to } = this.props
+    const { children, to, router } = this.props
     return (
-        <RouterContext.Consumer>
-            {(router) => (
-                <TouchableOpacity onPress={() => router.go(to)}>
-                <View>
-                    <Text style={{ color: '#550955' }}>{children}</Text>
-                </View>
-            </TouchableOpacity>
-        )}
-        </RouterContext.Consumer>
+        <TouchableOpacity onPress={() => router.go(to)}>
+            <View>
+                <Text style={{ color: '#550955' }}>{children}</Text>
+            </View>
+        </TouchableOpacity>
     )
   }
 }
 
-export default HeaderButton
+export default withRouter(HeaderButton)
