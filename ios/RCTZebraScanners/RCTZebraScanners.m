@@ -19,13 +19,6 @@ RCT_EXPORT_MODULE();
     return @{ @"sdkVersion": [self.scannerSdk sbtGetVersion] };
 }
 
-RCT_REMAP_METHOD(getScanners,
-                 getScannersWithResolver:(RCTPromiseResolveBlock)resolve
-                 rejecter:(RCTPromiseRejectBlock)reject)
-{
-    resolve([self.scannerSdk getScanners]);
-}
-
 RCT_REMAP_METHOD(connect,
                  params:(NSDictionary *)params
                  connectWithResolver:(RCTPromiseResolveBlock)resolve
@@ -33,6 +26,21 @@ RCT_REMAP_METHOD(connect,
 {
     int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
     SBT_RESULT result = [self.scannerSdk connect:scannerId];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        NSError *err;
+        reject([Serializer serializeResultErrorCode:result], [Serializer serializeResultErrorMessage:result], err);
+    }
+}
+
+RCT_REMAP_METHOD(disconnect,
+                 params:(NSDictionary *)params
+                 disconnectWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    SBT_RESULT result = [self.scannerSdk disconnect:scannerId];
     if (result == SBT_RESULT_SUCCESS) {
         resolve(@"");
     } else {

@@ -20,10 +20,6 @@ export default {
                 .catch((err) => new Error(err))
         })
     },
-
-    getScanners: () => {
-        return NativeModules.ZebraScanners.getScanners()    
-    },
     
     getPairingBarCode: (params) => {
         params = {

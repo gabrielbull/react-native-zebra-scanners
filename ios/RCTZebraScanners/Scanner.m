@@ -45,21 +45,9 @@
     return [self.sbtSdk sbtEstablishCommunicationSession:scannerId];
 }
 
-- (BOOL)disconnect:(int)scannerId
+- (SBT_RESULT)disconnect:(int)scannerId
 {
-    SBT_RESULT res = [self.sbtSdk sbtTerminateCommunicationSession:scannerId];
-    
-    if (res == SBT_RESULT_FAILURE) {
-        return NO;
-    }
-    else
-    {
-        // Graceful disconnection - Only reconnect to scanners that
-        // disconnected unexpectedly. Disable auto reconnect for
-        // this device since it disconnected expectedly.
-        // [self setAutoReconnectOption:scanner_id enableOption:NO];
-        return YES;
-    }
+    return [self.sbtSdk sbtTerminateCommunicationSession:scannerId];
 }
 
 - (SBT_RESULT)setAutoReconnectOption:(int)scannerId enableOption:(BOOL)enable

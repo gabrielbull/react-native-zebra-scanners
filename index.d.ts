@@ -3,7 +3,7 @@ declare module "react-native-zebra-scanners" {
 
     export type Scanner = {
         active: boolean
-        auto_communcation_session_reestablishment: boolean,
+        auto_communication_session_reestablishment: boolean,
         available: boolean,
         connection_type: number,
         scanner_id: number,
@@ -14,8 +14,6 @@ declare module "react-native-zebra-scanners" {
     export function connect(scannerId: number): Promise<void>;
 
     export function setAutoReconnectOption(scannerId: number, enableOption: boolean): Promise<void>;
-
-    export function getScanners(): Promise<Array<Scanner>>;
 
     export type PairingBarcodeParams = {
         width: number,
