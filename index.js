@@ -5,6 +5,22 @@ const calendarManagerEmitter = new NativeEventEmitter(NativeModules.ZebraScanner
 export default {
     sdkVersion: NativeModules.ZebraScanners.sdkVersion,
     
+    connect: (scannerId) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.connect({ scannerId })
+                .then(() => resolve())
+                .catch((err) => new Error(err))
+        })
+    },
+
+    setAutoReconnectOption: (scannerId, enableOption) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.setAutoReconnectOption({ scannerId, enableOption })
+                .then(() => resolve())
+                .catch((err) => new Error(err))
+        })
+    },
+
     getScanners: () => {
         return NativeModules.ZebraScanners.getScanners()    
     },

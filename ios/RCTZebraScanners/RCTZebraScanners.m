@@ -2,6 +2,7 @@
 #import <React/RCTLog.h>
 #import <React/RCTConvert.h>
 #import "BarcodeImage.h"
+#import "Serializer.h"
 
 @implementation RCTZebraScanners
 
@@ -25,6 +26,37 @@ RCT_REMAP_METHOD(getScanners,
     resolve([self.scannerSdk getScanners]);
 }
 
+RCT_REMAP_METHOD(connect,
+                 params:(NSDictionary *)params
+                 connectWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    SBT_RESULT result = [self.scannerSdk connect:scannerId];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        NSError *err;
+        reject([Serializer serializeResultErrorCode:result], [Serializer serializeResultErrorMessage:result], err);
+    }
+}
+
+RCT_REMAP_METHOD(setAutoReconnectOption,
+                 params:(NSDictionary *)params
+                 setAutoReconnectOptionResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    int enable = (BOOL) [[params objectForKey:@"enableOption"] boolValue];
+    SBT_RESULT result = [self.scannerSdk setAutoReconnectOption:scannerId enableOption:enable];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        NSError *err;
+        reject([Serializer serializeResultErrorCode:result], [Serializer serializeResultErrorMessage:result], err);
+    }
+}
+
 RCT_REMAP_METHOD(getPairingBarcode,
                  params:(NSDictionary *)params
                  getPairingBarcodeWithResolver:(RCTPromiseResolveBlock)resolve
@@ -33,7 +65,7 @@ RCT_REMAP_METHOD(getPairingBarcode,
     CGRect aRect = CGRectMake(0, 0, [[params objectForKey:@"width"] integerValue], [[params objectForKey:@"height"] integerValue]);
     NSString *btAddress = @"";
     
-    UIImage *image = [self.scannerSdk.apiInstance sbtGetPairingBarcode:BARCODE_TYPE_STC withComProtocol:STC_SSI_BLE withSetDefaultStatus:SETDEFAULT_YES withBTAddress:btAddress withImageFrame:aRect];
+    UIImage *image = [self.scannerSdk.sbtSdk sbtGetPairingBarcode:BARCODE_TYPE_STC withComProtocol:STC_SSI_BLE withSetDefaultStatus:SETDEFAULT_YES withBTAddress:btAddress withImageFrame:aRect];
 
     NSData *imageData = UIImagePNGRepresentation(image);
     NSString *encodedString = [imageData base64EncodedStringWithOptions:NSDataBase64Encoding64CharacterLineLength];

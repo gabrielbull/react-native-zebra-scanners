@@ -5,10 +5,12 @@
     NSMutableArray *scannerList;
 }
 
-
-@property id <ISbtSdkApi> apiInstance;
+@property id <ISbtSdkApi> sbtSdk;
 
 - (NSString *)sbtGetVersion;
 - (NSMutableArray *)getScanners;
+- (SBT_RESULT)connect:(int)scannerId;
+- (BOOL)disconnect:(int)scannerId;
+- (SBT_RESULT)setAutoReconnectOption:(int)scannerId enableOption:(BOOL)enable;
 
 @end

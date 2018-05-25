@@ -11,6 +11,10 @@ declare module "react-native-zebra-scanners" {
         scanner_name: string
     }
 
+    export function connect(scannerId: number): Promise<void>;
+
+    export function setAutoReconnectOption(scannerId: number, enableOption: boolean): Promise<void>;
+
     export function getScanners(): Promise<Array<Scanner>>;
 
     export type PairingBarcodeParams = {

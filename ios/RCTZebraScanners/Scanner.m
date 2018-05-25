@@ -7,28 +7,28 @@
 
 - (id)init
 {
-    self.apiInstance = [SbtSdkFactory createSbtSdkApiInstance];
-    [self.apiInstance sbtSetDelegate:self];
+    self.sbtSdk = [SbtSdkFactory createSbtSdkApiInstance];
+    [self.sbtSdk sbtSetDelegate:self];
     
     scannerList = [[NSMutableArray alloc] init];
     
-    [self.apiInstance sbtSetOperationalMode:SBT_OPMODE_ALL];
+    [self.sbtSdk sbtSetOperationalMode:SBT_OPMODE_ALL];
     
     int notifications_mask = 0;
     notifications_mask |= (SBT_EVENT_SCANNER_APPEARANCE | SBT_EVENT_SCANNER_DISAPPEARANCE | SBT_EVENT_SESSION_ESTABLISHMENT | SBT_EVENT_SESSION_TERMINATION | SBT_EVENT_BARCODE | SBT_EVENT_IMAGE | SBT_EVENT_VIDEO);
     
-    [self.apiInstance sbtSubsribeForEvents:notifications_mask];
+    [self.sbtSdk sbtSubsribeForEvents:notifications_mask];
     
     BOOL scanner_detection = true;
     
-    [self.apiInstance sbtEnableAvailableScannersDetection:scanner_detection];
+    [self.sbtSdk sbtEnableAvailableScannersDetection:scanner_detection];
 
     return self;
 }
 
 - (NSString *)sbtGetVersion
 {
-    return [self.apiInstance sbtGetVersion];
+    return [self.sbtSdk sbtGetVersion];
 }
 
 - (NSMutableArray *)getScanners
@@ -37,8 +37,46 @@
     [scannerList enumerateObjectsUsingBlock:^(SbtScannerInfo *scanner, NSUInteger idx, BOOL *stop) {
         [scanners addObject:[Serializer serializeScanner:scanner]];
     }];
-
     return scanners;
+}
+
+- (SBT_RESULT)connect:(int)scannerId
+{
+    return [self.sbtSdk sbtEstablishCommunicationSession:scannerId];
+}
+
+- (BOOL)disconnect:(int)scannerId
+{
+    SBT_RESULT res = [self.sbtSdk sbtTerminateCommunicationSession:scannerId];
+    
+    if (res == SBT_RESULT_FAILURE) {
+        return NO;
+    }
+    else
+    {
+        // Graceful disconnection - Only reconnect to scanners that
+        // disconnected unexpectedly. Disable auto reconnect for
+        // this device since it disconnected expectedly.
+        // [self setAutoReconnectOption:scanner_id enableOption:NO];
+        return YES;
+    }
+}
+
+- (SBT_RESULT)setAutoReconnectOption:(int)scannerId enableOption:(BOOL)enable
+{
+    SBT_RESULT result = NO;
+    result = [self.sbtSdk sbtEnableAutomaticSessionReestablishment:enable forScanner:scannerId];
+    if (result == SBT_RESULT_SUCCESS) {
+        for (SbtScannerInfo *scanner in [scannerList copy])
+        {
+            if ([scanner getScannerID] == scannerId)
+            {
+                [scanner setAutoCommunicationSessionReestablishment:enable];
+                break;
+            }
+        }
+    }
+    return result;
 }
 
 - (void)sbtEventScannerAppeared:(SbtScannerInfo*)availableScanner
