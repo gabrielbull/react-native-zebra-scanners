@@ -2,14 +2,18 @@
 import * as React from 'react'
 import { View, FlatList } from 'react-native'
 import { ScannersContext } from '../containers/Scanners'
-import { Header, ScannerListItem } from '../components'
+import { Header, ScannerListItem, HeaderButton } from '../components'
 
 class List extends React.Component {
   render () {
     const { children } = this.props
     return (
         <View style={{ flex: 1 }}>
-            <Header>Scanners</Header>
+            <Header
+                right={<HeaderButton to='/help'>Pair Help</HeaderButton>}
+            >
+                Scanners
+            </Header>
             <ScannersContext.Consumer>
                 {(scanners) => (
                     <FlatList
