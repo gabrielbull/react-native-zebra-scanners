@@ -14,7 +14,8 @@ class Scanners extends React.Component {
         AsyncStorage.getItem('scanners', (error, result) => {
             if (!error) {
                 try {
-                    this.setState({ scanners: JSON.parse(result) })
+                    const scanners = JSON.parse(result)
+                    if (scanners) this.setState({ scanners: JSON.parse(result) })
                 } catch (err) {
                 }
             }
