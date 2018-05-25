@@ -41,11 +41,7 @@ class Scanners extends React.Component {
               this.setState({ scanners: [ ...this.state.scanners, scanner ] }, this.persistData)
           }
       }
-      
-      persistData = () => {
-          AsyncStorage.setItem('scanners', JSON.stringify(this.state.scanners))
-      }
-    
+          
       handleScannerDisappeared = ({scannerId}) => {
         const scannerIndex = this.state.scanners.findIndex(s => s.scanner_id === scanner.scanner_id)
         if (scannerIndex !== -1) {
@@ -56,7 +52,9 @@ class Scanners extends React.Component {
             ]}, this.persistData)
         }
       }
-    
+      persistData = () => {
+        AsyncStorage.setItem('scanners', JSON.stringify(this.state.scanners))
+    }
       render () {
           return (
               <ScannersContext.Provider value={this.state.scanners}>

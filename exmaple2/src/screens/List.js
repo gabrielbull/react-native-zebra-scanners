@@ -15,13 +15,13 @@ class List extends React.Component {
                 Scanners
             </Header>
             <ScannersContext.Consumer>
-                {(scanners) => scanners.length ? this.renderList() : this.renderPlaceholder()}
+                {(scanners) => scanners.length ? this.renderList(scanners) : this.renderPlaceholder()}
             </ScannersContext.Consumer>
         </View>                
     )
   }
 
-  renderList () {
+  renderList (scanners) {
     return (
         <FlatList
             style={{ flex: 1 }}
