@@ -12,6 +12,7 @@ declare module "react-native-zebra-scanners" {
     }
 
     export function connect(scannerId: number): Promise<void>;
+    export function disconnect(scannerId: number): Promise<void>;
 
     export function setAutoReconnectOption(scannerId: number, enableOption: boolean): Promise<void>;
 

@@ -4,7 +4,6 @@ import { ScannersContext } from '../containers/Scanners'
 export default function withScanner (WrappedComponent, getScannerId) {
     return class extends React.Component {  
       render() {
-        console.log(this.props)
         const scannerId = getScannerId(this.props)
         return (
           <ScannersContext.Consumer>

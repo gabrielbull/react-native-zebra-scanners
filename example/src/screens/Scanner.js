@@ -7,6 +7,17 @@ import ZebraScanners from 'react-native-zebra-scanners'
 class Scanner extends React.Component {
     componentDidMount () {
         ZebraScanners.connect(this.props.scanner.scanner_id)
+            .then(() => {
+                console.log('CONNECTED')
+            })
+            .catch(() => console.log(':-('))
+
+        ZebraScanners.getScannerInfo(this.props.scanner.scanner_id)
+            .then((data) => {
+                new DOMParser()
+                console.log(data)
+            })
+            .catch(() => console.log(':-('))
     }
 
     componentWillUnmount () {

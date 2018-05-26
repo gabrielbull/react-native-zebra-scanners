@@ -20,6 +20,7 @@
 		C085D09F206F281E006AE17C /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C085D09E206F281E006AE17C /* CoreBluetooth.framework */; };
 		C0CD5BDE20B72C54001AC368 /* RCTZebraScannersEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C0CD5BDD20B72C54001AC368 /* RCTZebraScannersEvents.m */; };
 		C0CD5BE120B74E98001AC368 /* Serializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0CD5BE020B74E98001AC368 /* Serializer.m */; };
+		C0EF927A20B8DFDC008E0B34 /* SbtResult.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EF927920B8DFDC008E0B34 /* SbtResult.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,6 +56,8 @@
 		C0CD5BDD20B72C54001AC368 /* RCTZebraScannersEvents.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTZebraScannersEvents.m; sourceTree = "<group>"; };
 		C0CD5BDF20B74E98001AC368 /* Serializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serializer.h; sourceTree = "<group>"; };
 		C0CD5BE020B74E98001AC368 /* Serializer.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = Serializer.m; sourceTree = "<group>"; };
+		C0EF927820B8DFDC008E0B34 /* SbtResult.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SbtResult.h; sourceTree = "<group>"; };
+		C0EF927920B8DFDC008E0B34 /* SbtResult.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SbtResult.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,6 +107,8 @@
 				C0CD5BDD20B72C54001AC368 /* RCTZebraScannersEvents.m */,
 				C00F20CD20B5F888000130EE /* Scanner.h */,
 				C00F20CE20B5F888000130EE /* Scanner.m */,
+				C0EF927820B8DFDC008E0B34 /* SbtResult.h */,
+				C0EF927920B8DFDC008E0B34 /* SbtResult.m */,
 				C0CD5BDF20B74E98001AC368 /* Serializer.h */,
 				C0CD5BE020B74E98001AC368 /* Serializer.m */,
 			);
@@ -184,6 +189,7 @@
 				C085CFBB206F1DF5006AE17C /* RCTZebraScanners.m in Sources */,
 				C029295120B3B0AC00190618 /* BarcodeGen128.m in Sources */,
 				C00F20CF20B5F888000130EE /* Scanner.m in Sources */,
+				C0EF927A20B8DFDC008E0B34 /* SbtResult.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

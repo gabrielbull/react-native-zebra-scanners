@@ -2,6 +2,7 @@
 #import "SbtSdkFactory.h"
 #import "RCTZebraScannersEvents.h"
 #import "Serializer.h"
+#import "RMDAttributes.h"
 
 @implementation Scanner
 
@@ -31,13 +32,13 @@
     return [self.sbtSdk sbtGetVersion];
 }
 
-- (NSMutableArray *)getScanners
-{
-    NSMutableArray *scanners = [NSMutableArray array];
-    [scannerList enumerateObjectsUsingBlock:^(SbtScannerInfo *scanner, NSUInteger idx, BOOL *stop) {
-        [scanners addObject:[Serializer serializeScanner:scanner]];
-    }];
-    return scanners;
+- (SbtResult *)getScannerInfo:(int)scannerId {
+    NSString *in_xml = [NSString stringWithFormat:@"<inArgs><scannerID>%d</scannerID><cmdArgs><arg-xml><attrib_list>%d,%d,%d,%d</attrib_list></arg-xml></cmdArgs></inArgs>", scannerId, RMD_ATTR_FRMWR_VERSION, RMD_ATTR_MFD, RMD_ATTR_SERIAL_NUMBER, RMD_ATTR_MODEL_NUMBER];
+
+    NSMutableString *response = [[NSMutableString alloc] init];
+    [response setString:@""];
+    SBT_RESULT result = [self executeCommand:SBT_RSM_ATTR_GET aInXML:in_xml aOutXML:&response forScanner:scannerId];
+    return [[SbtResult alloc] initWithResponse:result withResponse:response];
 }
 
 - (SBT_RESULT)connect:(int)scannerId
@@ -65,6 +66,11 @@
         }
     }
     return result;
+}
+
+- (SBT_RESULT)executeCommand:(int)opCode aInXML:(NSString*)inXML aOutXML:(NSMutableString**)outXML forScanner:(int)scannerId
+{
+    return [self.sbtSdk sbtExecuteCommand:opCode aInXML:inXML aOutXML:outXML forScanner:scannerId];
 }
 
 - (void)sbtEventScannerAppeared:(SbtScannerInfo*)availableScanner

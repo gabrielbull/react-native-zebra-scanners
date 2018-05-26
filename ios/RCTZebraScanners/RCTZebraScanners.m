@@ -3,6 +3,7 @@
 #import <React/RCTConvert.h>
 #import "BarcodeImage.h"
 #import "Serializer.h"
+#import "SbtResult.h"
 
 @implementation RCTZebraScanners
 
@@ -17,6 +18,21 @@ RCT_EXPORT_MODULE();
 - (NSDictionary *)constantsToExport
 {
     return @{ @"sdkVersion": [self.scannerSdk sbtGetVersion] };
+}
+
+RCT_REMAP_METHOD(getScannerInfo,
+                 params:(NSDictionary *)params
+                 getScannerInfoWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    SbtResult *res = [self.scannerSdk getScannerInfo:scannerId];
+    if (res.result == SBT_RESULT_SUCCESS) {
+        resolve(res.response);
+    } else {
+        NSError *err;
+        reject([Serializer serializeResultErrorCode:res.result], [Serializer serializeResultErrorMessage:res.result], err);
+    }
 }
 
 RCT_REMAP_METHOD(connect,
