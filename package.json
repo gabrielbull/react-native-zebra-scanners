@@ -23,7 +23,8 @@
     "example:update": "rm -rf example/node_modules/react-native-zebra-scanners/ios && rm -f example/node_modules/react-native-zebra-scanners/index.js && cp -R ios example/node_modules/react-native-zebra-scanners/ios && cp index.js example/node_modules/react-native-zebra-scanners/index.js"
   },
   "dependencies": {
-    "xmldom": "^0.1.27"
+    "xmldom": "^0.1.27",
+    "xpath": "^0.0.27"
   },
   "peerDependencies": {
     "react-native": ">=0.54.4"

@@ -32,8 +32,8 @@
     return [self.sbtSdk sbtGetVersion];
 }
 
-- (SbtResult *)getScannerInfo:(int)scannerId {
-    NSString *in_xml = [NSString stringWithFormat:@"<inArgs><scannerID>%d</scannerID><cmdArgs><arg-xml><attrib_list>%d,%d,%d,%d</attrib_list></arg-xml></cmdArgs></inArgs>", scannerId, RMD_ATTR_FRMWR_VERSION, RMD_ATTR_MFD, RMD_ATTR_SERIAL_NUMBER, RMD_ATTR_MODEL_NUMBER];
+- (SbtResult *)getScannerInfo:(int)scannerId withAttributes:(NSArray *)attributes {
+    NSString *in_xml = [NSString stringWithFormat:@"<inArgs><scannerID>%d</scannerID><cmdArgs><arg-xml><attrib_list>%@</attrib_list></arg-xml></cmdArgs></inArgs>", scannerId, [attributes componentsJoinedByString:@","]];
 
     NSMutableString *response = [[NSMutableString alloc] init];
     [response setString:@""];

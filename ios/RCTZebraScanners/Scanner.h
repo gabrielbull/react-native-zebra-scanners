@@ -9,7 +9,7 @@
 @property id <ISbtSdkApi> sbtSdk;
 
 - (NSString *)sbtGetVersion;
-- (SbtResult *)getScannerInfo:(int)scannerId;
+- (SbtResult *)getScannerInfo:(int)scannerId withAttributes:(NSArray *)attributes;
 - (SBT_RESULT)connect:(int)scannerId;
 - (SBT_RESULT)disconnect:(int)scannerId;
 - (SBT_RESULT)setAutoReconnectOption:(int)scannerId enableOption:(BOOL)enable;

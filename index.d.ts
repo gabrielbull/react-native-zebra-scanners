@@ -1,6 +1,10 @@
 declare module "react-native-zebra-scanners" {
     import { URISource } from "react-native";
 
+    export type RmdAttr = 533 | 534 | 140 | 145 | 6000 | 1 | 2 | 12 | 4 | 3 | 83 | 8 | 14 | 0 | 9 | 10 | 6 | 5 | 408 
+        | 7 | 11 | 292 | 15 | 84 | 85 | 20012 | 535 | 89 | 90 | 91 | 95 | 96 | 290 | 291 | 326 | 611 | 592 | 338 | 339 
+        | 340 | 227 | 294 | 617 | 618 | 581 | 293 | 573 | 574 | 1167 | 341 | 342 | 371;
+
     export type Scanner = {
         active: boolean
         auto_communication_session_reestablishment: boolean,
@@ -9,7 +13,11 @@ declare module "react-native-zebra-scanners" {
         scanner_id: number,
         scanner_model: number,
         scanner_name: string
-    }
+    };
+
+    export function getScannerInfo(scannerId: number, attributes: Array<RmdAttr>): Promise<{[key: string]: string | number}>;
+
+    export function connect(scannerId: number): Promise<void>;
 
     export function connect(scannerId: number): Promise<void>;
     export function disconnect(scannerId: number): Promise<void>;

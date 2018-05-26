@@ -26,7 +26,8 @@ RCT_REMAP_METHOD(getScannerInfo,
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
     int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
-    SbtResult *res = [self.scannerSdk getScannerInfo:scannerId];
+    NSArray *attributes = [params objectForKey:@"attributes"];
+    SbtResult *res = [self.scannerSdk getScannerInfo:scannerId withAttributes:attributes];
     if (res.result == SBT_RESULT_SUCCESS) {
         resolve(res.response);
     } else {
