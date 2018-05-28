@@ -75,61 +75,34 @@
 
 - (void)sbtEventScannerAppeared:(SbtScannerInfo*)availableScanner
 {
-    BOOL found = NO;
     SbtScannerInfo *scanner;
     
-    for (SbtScannerInfo *item in [scannerList copy])
-    {
-        if ([item getScannerID] == [availableScanner getScannerID])
-        {
-            [item setActive:NO];
-            [item setAvailable:YES];
-            [item setAutoCommunicationSessionReestablishment:[availableScanner getAutoCommunicationSessionReestablishment]];
-            [item setConnectionType:[availableScanner getConnectionType]];
-            found = YES;
-            scanner = item;
-            break;
-        }
-    }
-    
-    if (found == NO)
-    {
-        scanner = [[SbtScannerInfo alloc] init];
-        [scanner setActive:NO];
-        [scanner setAvailable:YES];
-        [scanner setScannerID:[availableScanner getScannerID]];
-        [scanner setAutoCommunicationSessionReestablishment:[availableScanner getAutoCommunicationSessionReestablishment]];
-        [scanner setConnectionType:[availableScanner getConnectionType]];
-        [scanner setScannerName:[availableScanner getScannerName]];
-        [scanner setScannerModel:[availableScanner getScannerModel]];
-        [scannerList addObject:scanner];
-    }
+    scanner = [[SbtScannerInfo alloc] init];
+    [scanner setActive:NO];
+    [scanner setAvailable:YES];
+    [scanner setScannerID:[availableScanner getScannerID]];
+    [scanner setAutoCommunicationSessionReestablishment:[availableScanner getAutoCommunicationSessionReestablishment]];
+    [scanner setConnectionType:[availableScanner getConnectionType]];
+    [scanner setScannerName:[availableScanner getScannerName]];
+    [scanner setScannerModel:[availableScanner getScannerModel]];
+    [scannerList addObject:scanner];
 
     [RCTZebraScannersEvents onScannerAppeared:scanner];
 }
 
 - (void)sbtEventScannerDisappeared:(int)scannerID
 {
-    for (SbtScannerInfo *scanner in [scannerList copy])
-    {
-        if ([scanner getScannerID] == scannerID)
-        {
-            [scanner setAvailable:NO];
-            break;
-        }
-    }
-    
     [RCTZebraScannersEvents onScannerDisappeared:scannerID];
 }
 
 - (void)sbtEventCommunicationSessionEstablished:(SbtScannerInfo*)activeScanner
 {
-    NSLog(@"✳️✳️✳️ ARXXC: Communication session established");
+    [RCTZebraScannersEvents onCommunicationSessionEstablished:activeScanner];
 }
 
 - (void)sbtEventCommunicationSessionTerminated:(int)scannerID
 {
-    NSLog(@"✳️✳️✳️ ARXXC: Communication session terminated");
+    [RCTZebraScannersEvents onCommunicationSessionTerminated:scannerID];
 }
 
 - (void)blinkLEDOff

@@ -3,6 +3,8 @@
 
 NSString *const SCANNER_APPEARED = @"ZebraScanners/ScannerAppeared";
 NSString *const SCANNER_DISAPPEARED = @"ZebraScanners/ScannerDisappeard";
+NSString *const COMMUNICATION_SESSION_ESTABLISHED = @"ZebraScanners/CommunicationSessionEstablished";
+NSString *const COMMUNICATION_SESSION_TERMINATED = @"ZebraScanners/CommunicationSessionTerminated";
 
 @implementation RCTZebraScannersEvents
 
@@ -12,13 +14,15 @@ RCT_EXPORT_MODULE();
 {
     return @{
          @"SCANNER_APPEARED": SCANNER_APPEARED,
-         @"SCANNER_DISAPPEARED": SCANNER_DISAPPEARED
+         @"SCANNER_DISAPPEARED": SCANNER_DISAPPEARED,
+         @"COMMUNICATION_SESSION_ESTABLISHED": COMMUNICATION_SESSION_ESTABLISHED,
+         @"COMMUNICATION_SESSION_TERMINATED": COMMUNICATION_SESSION_TERMINATED
     };
 }
 
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[SCANNER_APPEARED, SCANNER_DISAPPEARED];
+    return @[SCANNER_APPEARED, SCANNER_DISAPPEARED, COMMUNICATION_SESSION_ESTABLISHED, COMMUNICATION_SESSION_TERMINATED];
 }
 
 - (void)startObserving {
@@ -44,6 +48,18 @@ RCT_EXPORT_MODULE();
 + (BOOL)onScannerDisappeared:(int)scannerID
 {
     [self postNotificationName:SCANNER_DISAPPEARED withPayload:@{@"scannerId": [NSNumber numberWithInt:scannerID]}];
+    return YES;
+}
+
++ (BOOL)onCommunicationSessionEstablished:(SbtScannerInfo*)availableScanner
+{
+    [self postNotificationName:COMMUNICATION_SESSION_ESTABLISHED withPayload:@{@"scanner": [Serializer serializeScanner:availableScanner]}];
+    return YES;
+}
+
++ (BOOL)onCommunicationSessionTerminated:(int)scannerID
+{
+    [self postNotificationName:COMMUNICATION_SESSION_TERMINATED withPayload:@{@"scannerId": [NSNumber numberWithInt:scannerID]}];
     return YES;
 }
 

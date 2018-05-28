@@ -21,11 +21,15 @@ class Scanners extends React.Component {
         })
         ZebraScanners.addEventListener('SCANNER_APPEARED', this.handleScannerAppeared)
         ZebraScanners.addEventListener('SCANNER_DISAPPEARED', this.handleScannerDisappeared)    
+        ZebraScanners.addEventListener('COMMUNICATION_SESSION_ESTABLISHED', this.handleCommunicationSessionEstablished)    
+        ZebraScanners.addEventListener('COMMUNICATION_SESSION_TERMINATED', this.handleCommunicationSessionTerminated)    
     }
 
     componentWillUnmount() {
         ZebraScanners.removeEventListener('SCANNER_APPEARED', this.handleScannerAppeared)
         ZebraScanners.removeEventListener('SCANNER_DISAPPEARED', this.handleScannerDisappeared)
+        ZebraScanners.removeEventListener('COMMUNICATION_SESSION_ESTABLISHED', this.handleCommunicationSessionEstablished)    
+        ZebraScanners.removeEventListener('COMMUNICATION_SESSION_TERMINATED', this.handleCommunicationSessionTerminated)    
       }
     
       handleScannerAppeared = ({scanner}) => {
@@ -54,6 +58,37 @@ class Scanners extends React.Component {
       persistData = () => {
         AsyncStorage.setItem('scanners', JSON.stringify(this.state.scanners))
     }
+
+    handleCommunicationSessionEstablished = ({scanner}) => {
+        const index = this.state.scanners.findIndex(s => s.scanner_id === scanner.scanner_id)
+        let scanners
+        if (index !== -1) {
+            scanners = [
+                ...this.state.scanners.slice(0, index),
+                scanner,
+                ...this.state.scanners.slice(index + 1)
+            ]
+        } else {
+            scanners = [...this.state.scanners, scanner]
+        }
+        this.setState({ scanners }, this.persistData)
+    }
+
+    handleCommunicationSessionTerminated = ({scannerId}) => {
+        const index = this.state.scanners.findIndex(s => s.scanner_id === scanner.scanner_id)
+        if (index !== -1) {
+            let scanners = [
+                ...this.state.scanners.slice(0, index),
+                {
+                    ...this.state.scanners[index],
+                    active: false
+                },
+                ...this.state.scanners.slice(index + 1)
+            ]
+            this.setState({ scanners }, this.persistData)
+        }
+    }
+
       render () {
           return (
               <ScannersContext.Provider value={this.state.scanners}>
