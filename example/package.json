@@ -13,9 +13,9 @@
     "react-native-zebra-scanners": "file:.."
   },
   "devDependencies": {
-    "babel-jest": "23.0.0",
+    "babel-jest": "23.0.1",
     "babel-preset-react-native": "4.0.0",
-    "jest": "23.0.0",
+    "jest": "23.0.1",
     "react-test-renderer": "16.4.0"
   },
   "jest": {
