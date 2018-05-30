@@ -37,21 +37,6 @@
 
 + (NSString *)serializeResultErrorCode:(SBT_RESULT)result
 {
-    if (result == SBT_RESULT_FAILURE) {
-        return @"1";
-    } else if (result == SBT_RESULT_SCANNER_NOT_AVAILABLE) {
-        return @"2";
-    } else if (result == SBT_RESULT_SCANNER_NOT_ACTIVE) {
-        return @"3";
-    } else if (result == SBT_RESULT_INVALID_PARAMS) {
-        return @"4";
-    } else if (result == SBT_RESULT_RESPONSE_TIMEOUT) {
-        return @"5";
-    } else if (result == SBT_RESULT_OPCODE_NOT_SUPPORTED) {
-        return @"6";
-    } else if (result == SBT_RESULT_SCANNER_NO_SUPPORT) {
-        return @"7";
-    }
-    return @"0";
+    return [NSString stringWithFormat:@"%i", result];
 }
 @end

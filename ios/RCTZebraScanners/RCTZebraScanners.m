@@ -31,8 +31,11 @@ RCT_REMAP_METHOD(getScannerInfo,
     if (res.result == SBT_RESULT_SUCCESS) {
         resolve(res.response);
     } else {
-        NSError *err;
-        reject([Serializer serializeResultErrorCode:res.result], [Serializer serializeResultErrorMessage:res.result], err);
+        reject(
+               [Serializer serializeResultErrorCode:res.result],
+               [Serializer serializeResultErrorMessage:res.result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:res.result] code:res.result userInfo:nil]
+               );
     }
 }
 
@@ -46,8 +49,11 @@ RCT_REMAP_METHOD(connect,
     if (result == SBT_RESULT_SUCCESS) {
         resolve(@"");
     } else {
-        NSError *err;
-        reject([Serializer serializeResultErrorCode:result], [Serializer serializeResultErrorMessage:result], err);
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
     }
 }
 
@@ -61,8 +67,11 @@ RCT_REMAP_METHOD(disconnect,
     if (result == SBT_RESULT_SUCCESS) {
         resolve(@"");
     } else {
-        NSError *err;
-        reject([Serializer serializeResultErrorCode:result], [Serializer serializeResultErrorMessage:result], err);
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
     }
 }
 
@@ -77,8 +86,11 @@ RCT_REMAP_METHOD(setAutoReconnectOption,
     if (result == SBT_RESULT_SUCCESS) {
         resolve(@"");
     } else {
-        NSError *err;
-        reject([Serializer serializeResultErrorCode:result], [Serializer serializeResultErrorMessage:result], err);
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
     }
 }
 

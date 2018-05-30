@@ -13,11 +13,20 @@ class Scanner extends React.Component {
     componentDidMount () {        
         ZebraScanners.getScannerInfo(this.props.scanner.scanner_id, [RMD_ATTR_FRMWR_VERSION, RMD_ATTR_MFD, RMD_ATTR_MODEL_NUMBER, RMD_ATTR_SERIAL_NUMBER])
             .then((attributes) => this.setState({ attributes }))
-            .catch(() => console.log(err))
+            .catch((err) => console.log(err))
     }
 
     handleDisconnectPress = () => {
-        ZebraScanners.disconnect(this.props.scanner.scanner_id)
+        this.setState({ connecting: true }, () => {
+            ZebraScanners.disconnect(this.props.scanner.scanner_id)
+                .then(() => {
+                    this.setState({ connecting: false })
+                })
+                .catch((err) => {
+                    this.setState({ connecting: false })
+                    alert(err)
+                })
+        })
     }
 
     handleConnectPress = () => {

@@ -63,7 +63,7 @@ export default {
         return new Promise((resolve, reject) => {
             NativeModules.ZebraScanners.getScannerInfo({ scannerId, attributes })
                 .then((data) => resolve(parseXml(data)))
-                .catch((err) => new Error(err))
+                .catch((err) => reject(err))
         })
     },
 
@@ -71,7 +71,7 @@ export default {
         return new Promise((resolve, reject) => {
             NativeModules.ZebraScanners.connect({ scannerId })
                 .then(() => resolve())
-                .catch((err) => new Error(err))
+                .catch((err) => reject(err))
         })
     },
     
@@ -79,7 +79,7 @@ export default {
         return new Promise((resolve, reject) => {
             NativeModules.ZebraScanners.disconnect({ scannerId })
                 .then(() => resolve())
-                .catch((err) => new Error(err))
+                .catch((err) => reject(err))
         })
     },
 
@@ -87,7 +87,7 @@ export default {
         return new Promise((resolve, reject) => {
             NativeModules.ZebraScanners.setAutoReconnectOption({ scannerId, enableOption })
                 .then(() => resolve())
-                .catch((err) => new Error(err))
+                .catch((err) => reject(err))
         })
     },
     
