@@ -10,10 +10,22 @@ class Scanner extends React.Component {
         attributes: {}
     }
 
-    componentDidMount () {        
+    componentDidMount () {
+        if (this.props.scanner.active) {
+            this.updateScannerInfo()
+        }
+    }
+
+    componentDidUpdate (prevProps) {
+        if (!prevProps.scanner.active && this.props.scanner.active) {
+            this.updateScannerInfo()
+        }
+    }
+
+    updateScannerInfo () {
         ZebraScanners.getScannerInfo(this.props.scanner.scanner_id, [RMD_ATTR_FRMWR_VERSION, RMD_ATTR_MFD, RMD_ATTR_MODEL_NUMBER, RMD_ATTR_SERIAL_NUMBER])
             .then((attributes) => this.setState({ attributes }))
-            .catch((err) => console.log(err))
+            .catch((err) => console.log(err))        
     }
 
     handleDisconnectPress = () => {

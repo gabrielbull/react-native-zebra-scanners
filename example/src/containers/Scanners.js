@@ -14,7 +14,7 @@ class Scanners extends React.Component {
             if (!error) {
                 try {
                     const scanners = JSON.parse(result)
-                    if (scanners) this.setState({ scanners: JSON.parse(result) })
+                    if (scanners) this.setState({ scanners: JSON.parse(result) }, this.componentDidLoad)
                 } catch (err) {
                 }
             }
@@ -22,7 +22,18 @@ class Scanners extends React.Component {
         ZebraScanners.addEventListener('SCANNER_APPEARED', this.handleScannerAppeared)
         ZebraScanners.addEventListener('SCANNER_DISAPPEARED', this.handleScannerDisappeared)    
         ZebraScanners.addEventListener('COMMUNICATION_SESSION_ESTABLISHED', this.handleCommunicationSessionEstablished)    
-        ZebraScanners.addEventListener('COMMUNICATION_SESSION_TERMINATED', this.handleCommunicationSessionTerminated)    
+        ZebraScanners.addEventListener('COMMUNICATION_SESSION_TERMINATED', this.handleCommunicationSessionTerminated)
+    }
+
+    componentDidLoad () {
+        this.state.scanners.forEach(scanner => {
+            if (scanner.active) {
+                ZebraScanners.connect(scanner.scanner_id)
+                    .catch(() => {
+                        this.handleScannerDisappeared({ scannerId: scanner.scanner_id })
+                    })
+            }
+        })
     }
 
     componentWillUnmount() {
@@ -46,16 +57,17 @@ class Scanners extends React.Component {
       }
           
       handleScannerDisappeared = ({scannerId}) => {
-        const scannerIndex = this.state.scanners.findIndex(s => s.scanner_id === scanner.scanner_id)
+        const scannerIndex = this.state.scanners.findIndex(s => s.scanner_id === scannerId)
         if (scannerIndex !== -1) {
             this.setState({ scanners: [
                 ...this.state.scanners.slice(0, scannerIndex),
-                { ...scanner, available: false, active: false },
+                { ...this.state.scanners[scannerIndex], available: false, active: false },
                 ...this.state.scanners.slice(scannerIndex + 1)
             ]}, this.persistData)
         }
       }
-      persistData = () => {
+
+    persistData = () => {
         AsyncStorage.setItem('scanners', JSON.stringify(this.state.scanners))
     }
 
@@ -75,14 +87,11 @@ class Scanners extends React.Component {
     }
 
     handleCommunicationSessionTerminated = ({scannerId}) => {
-        const index = this.state.scanners.findIndex(s => s.scanner_id === scanner.scanner_id)
+        const index = this.state.scanners.findIndex(s => s.scanner_id === scannerId)
         if (index !== -1) {
             let scanners = [
                 ...this.state.scanners.slice(0, index),
-                {
-                    ...this.state.scanners[index],
-                    active: false
-                },
+                { ...this.state.scanners[index], active: false },
                 ...this.state.scanners.slice(index + 1)
             ]
             this.setState({ scanners }, this.persistData)

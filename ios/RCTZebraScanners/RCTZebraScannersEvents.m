@@ -8,6 +8,21 @@ NSString *const COMMUNICATION_SESSION_TERMINATED = @"ZebraScanners/Communication
 
 @implementation RCTZebraScannersEvents
 
+static BOOL _isObserving = NO;
+static NSMutableArray * _eventPool;
+
++ (BOOL)isObserving { return _isObserving; }
++ (void)setIsObserving:(BOOL)isObserving { _isObserving = isObserving; }
+
++ (NSMutableArray *)eventPool {
+    if (!_eventPool) {
+        _eventPool = [[NSMutableArray alloc] init];
+    }
+    return _eventPool;
+    
+}
++ (void)setEventPool:(NSMutableArray *)eventPool { _eventPool = eventPool; }
+
 RCT_EXPORT_MODULE();
 
 - (NSDictionary *)constantsToExport
@@ -26,15 +41,18 @@ RCT_EXPORT_MODULE();
 }
 
 - (void)startObserving {
+    RCTZebraScannersEvents.isObserving = YES;
     for (NSString *event in [self supportedEvents]) {
         [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(handleNotification:)
                                                      name:event
                                                    object:nil];
     }
+    [RCTZebraScannersEvents flushEvents];
 }
 
 - (void)stopObserving {
+    RCTZebraScannersEvents.isObserving = NO;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
@@ -63,11 +81,25 @@ RCT_EXPORT_MODULE();
     return YES;
 }
 
++ (void)flushEvents {
+    for (NSDictionary* event in RCTZebraScannersEvents.eventPool)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:[event valueForKey: @"name"]
+                                                            object:self
+                                                          userInfo:[event valueForKey: @"payload"]];
+    }
+    [RCTZebraScannersEvents.eventPool removeAllObjects];
+}
+
 # pragma mark Private
 + (void)postNotificationName:(NSString *)name withPayload:(NSDictionary<NSString *, id> *)payload {
-    [[NSNotificationCenter defaultCenter] postNotificationName:name
-                                                        object:self
-                                                      userInfo:payload];
+    if (RCTZebraScannersEvents.isObserving) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:name
+                                                            object:self
+                                                          userInfo:payload];
+    } else {
+        [RCTZebraScannersEvents.eventPool addObject:@{@"name": name, @"payload": payload}];
+    }
 }
 
 - (void)handleNotification:(NSNotification *)notification {
