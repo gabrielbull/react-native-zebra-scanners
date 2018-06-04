@@ -39,7 +39,6 @@ class Scanners extends React.Component {
       }
     
       handleScannerAppeared = ({scanner}) => {
-          console.log('handleScannerAppeared', scanner)
           const scannerIndex = this.state.scanners.findIndex(s => s.scanner_id === scanner.scanner_id)
           if (scannerIndex === -1) {
               this.setState({ scanners: [ ...this.state.scanners, scanner ] }, this.persistData)
@@ -52,7 +51,6 @@ class Scanners extends React.Component {
       }
           
       handleScannerDisappeared = ({scannerId}) => {
-        console.log('handleScannerDisappeared')
         scanner = this.updateScanner({ scanner_id: scannerId }, { available: false, active: false })
         if (scanner.auto_communication_session_reestablishment) {
             this.connectScanner(scanner)
@@ -61,13 +59,11 @@ class Scanners extends React.Component {
 
       connectScanner = (scanner) => {
         ZebraScanners.connect(scanner.scanner_id)
-            .catch(() => {
-                this.updateScanner(scanner, { available: false, active: false })
-            })
+            .catch((err) => {})
       }
 
     handleCommunicationSessionEstablished = ({scanner}) => {
-        this.updateScanner(scanner)
+        this.updateScanner(scanner, { available: true, active: true })
     }
 
     handleCommunicationSessionTerminated = ({scannerId}) => {

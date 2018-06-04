@@ -17,7 +17,7 @@ class ScannerAttribute extends React.Component {
     return (
         <View
             style={{
-                height: 60,
+                height: 30,
                 borderBottomWidth: 1,
                 borderBottomColor: '#B1A5B1',
                 paddingHorizontal: 15,
@@ -26,12 +26,12 @@ class ScannerAttribute extends React.Component {
             }}
         >
             <View style={{ flex: 1 }}>
-                <Text numberOfLines={1} style={{ fontWeight: 'bold' }}>
+                <Text numberOfLines={1} style={{ fontWeight: 'bold', fontSize: 10 }}>
                     {this.label}
                 </Text>
             </View>
             <View style={{ paddingLeft: 15, alignItems: 'flex-end' }}>
-                <Text numberOfLines={1}>
+                <Text numberOfLines={1} style={{ fontSize: 10 }}>
                     {value}
                 </Text>
             </View>
