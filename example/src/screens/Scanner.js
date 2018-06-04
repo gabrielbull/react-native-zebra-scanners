@@ -1,13 +1,15 @@
 import * as React from 'react'
 import { View, FlatList, Text, ScrollView, Image, ActivityIndicator } from 'react-native'
-import { Header, HeaderButton, ScannerAttribute, Button, SwitchRow } from '../components'
+import { Header, HeaderButton, ScannerAttribute, Button, SwitchRow, PickerRow } from '../components'
 import { withRouter, withScanner } from '../containers'
 import ZebraScanners, { RMD_ATTR_FRMWR_VERSION, RMD_ATTR_MFD, RMD_ATTR_MODEL_NUMBER, RMD_ATTR_SERIAL_NUMBER } from 'react-native-zebra-scanners'
+import beepCodes from '../data/beepCodes'
 
 class Scanner extends React.Component {
     state = {
         connecting: false,
-        attributes: {}
+        attributes: {},
+        beepCode: beepCodes[0].value
     }
 
     componentDidMount () {
@@ -74,8 +76,9 @@ class Scanner extends React.Component {
             </Header>
             <ScrollView style={{ flex: 1 }}>
                 {this.renderConnect()}
-                {this.renderAttributes()}
+                {this.props.scanner.active ? this.renderAttributes() : null}
                 {this.props.scanner.active ? this.renderReconnectOption() : null}
+                {this.props.scanner.active ? this.renderBeeper() : null}
             </ScrollView>
         </View>                            
     )
@@ -109,6 +112,22 @@ class Scanner extends React.Component {
                  label='Auto Reconnect Option'
                  value={this.props.scanner.auto_communication_session_reestablishment}
                  onValueChange={this.handleAutoReconnectOptionChange}
+            />
+        )
+    }
+
+    renderBeeper () {
+        return (
+            <PickerRow
+                 label='Beeper'
+                 items={beepCodes}
+                 selectedValue={this.state.beepCode}
+                 onValueChange={(beepCode) => {
+                     console.log(beepCode)
+                     this.setState({ beepCode })
+                }}
+                 actionLabel='🔔'
+                 onActionPress={() => null}
             />
         )
     }
