@@ -1,6 +1,6 @@
 import * as React from 'react'
-import { View, FlatList, Text, ScrollView, Image, ActivityIndicator, Switch } from 'react-native'
-import { Header, HeaderButton, ScannerAttribute, Button } from '../components'
+import { View, FlatList, Text, ScrollView, Image, ActivityIndicator } from 'react-native'
+import { Header, HeaderButton, ScannerAttribute, Button, SwitchRow } from '../components'
 import { withRouter, withScanner } from '../containers'
 import ZebraScanners, { RMD_ATTR_FRMWR_VERSION, RMD_ATTR_MFD, RMD_ATTR_MODEL_NUMBER, RMD_ATTR_SERIAL_NUMBER } from 'react-native-zebra-scanners'
 
@@ -105,10 +105,11 @@ class Scanner extends React.Component {
 
     renderReconnectOption () {
         return (
-            <View style={{ flexDirection: 'row' }}>
-                <Text>Auto Reconnect Option</Text>
-                <Switch value={this.props.scanner.auto_communication_session_reestablishment} onValueChange={this.handleAutoReconnectOptionChange} />
-            </View>
+            <SwitchRow
+                 label='Auto Reconnect Option'
+                 value={this.props.scanner.auto_communication_session_reestablishment}
+                 onValueChange={this.handleAutoReconnectOptionChange}
+            />
         )
     }
 }
