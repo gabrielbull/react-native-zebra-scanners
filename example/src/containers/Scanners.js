@@ -27,12 +27,7 @@ class Scanners extends React.Component {
 
     componentDidLoad () {
         this.state.scanners.forEach(scanner => {
-            if (scanner.active) {
-                ZebraScanners.connect(scanner.scanner_id)
-                    .catch(() => {
-                        this.handleScannerDisappeared({ scannerId: scanner.scanner_id })
-                    })
-            }
+            if (scanner.active || scanner.auto_communication_session_reestablishment) this.connectScanner(scanner)
         })
     }
 
@@ -44,58 +39,57 @@ class Scanners extends React.Component {
       }
     
       handleScannerAppeared = ({scanner}) => {
+          console.log('handleScannerAppeared', scanner)
           const scannerIndex = this.state.scanners.findIndex(s => s.scanner_id === scanner.scanner_id)
-          if (scannerIndex !== -1) {
-              this.setState({ scanners: [
-                  ...this.state.scanners.slice(0, scannerIndex),
-                  { ...scanner, available: true },
-                  ...this.state.scanners.slice(scannerIndex + 1)
-              ]}, this.persistData)
-          } else {
+          if (scannerIndex === -1) {
               this.setState({ scanners: [ ...this.state.scanners, scanner ] }, this.persistData)
+          } else {
+            scanner = this.updateScanner(scanner, { available: true })
+          }
+          if (scanner.active || scanner.auto_communication_session_reestablishment) {
+            this.connectScanner(scanner)
           }
       }
           
       handleScannerDisappeared = ({scannerId}) => {
-        const scannerIndex = this.state.scanners.findIndex(s => s.scanner_id === scannerId)
-        if (scannerIndex !== -1) {
-            this.setState({ scanners: [
-                ...this.state.scanners.slice(0, scannerIndex),
-                { ...this.state.scanners[scannerIndex], available: false, active: false },
-                ...this.state.scanners.slice(scannerIndex + 1)
-            ]}, this.persistData)
+        console.log('handleScannerDisappeared')
+        scanner = this.updateScanner({ scanner_id: scannerId }, { available: false, active: false })
+        if (scanner.auto_communication_session_reestablishment) {
+            this.connectScanner(scanner)
         }
-      }
-
-    persistData = () => {
-        AsyncStorage.setItem('scanners', JSON.stringify(this.state.scanners))
     }
 
+      connectScanner = (scanner) => {
+        ZebraScanners.connect(scanner.scanner_id)
+            .catch(() => {
+                this.updateScanner(scanner, { available: false, active: false })
+            })
+      }
+
     handleCommunicationSessionEstablished = ({scanner}) => {
-        const index = this.state.scanners.findIndex(s => s.scanner_id === scanner.scanner_id)
-        let scanners
-        if (index !== -1) {
-            scanners = [
-                ...this.state.scanners.slice(0, index),
-                scanner,
-                ...this.state.scanners.slice(index + 1)
-            ]
-        } else {
-            scanners = [...this.state.scanners, scanner]
-        }
-        this.setState({ scanners }, this.persistData)
+        this.updateScanner(scanner)
     }
 
     handleCommunicationSessionTerminated = ({scannerId}) => {
-        const index = this.state.scanners.findIndex(s => s.scanner_id === scannerId)
-        if (index !== -1) {
-            let scanners = [
-                ...this.state.scanners.slice(0, index),
-                { ...this.state.scanners[index], active: false },
-                ...this.state.scanners.slice(index + 1)
-            ]
-            this.setState({ scanners }, this.persistData)
-        }
+        this.updateScanner({ scanner_id: scannerId }, { active: false })
+    }
+
+    updateScanner (scanner, data = null) {
+        if (data === null) data = scanner
+      const scannerIndex = this.state.scanners.findIndex(s => s.scanner_id === scanner.scanner_id)
+      if (scannerIndex !== -1) {
+          scanner = { ...this.state.scanners[scannerIndex], ...scanner, ...data }
+          this.setState({ scanners: [
+              ...this.state.scanners.slice(0, scannerIndex),
+              scanner,
+              ...this.state.scanners.slice(scannerIndex + 1)
+          ]}, this.persistData)
+      }
+      return scanner
+    }
+
+    persistData = () => {
+        AsyncStorage.setItem('scanners', JSON.stringify(this.state.scanners))
     }
 
       render () {
