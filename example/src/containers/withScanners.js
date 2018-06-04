@@ -6,7 +6,7 @@ export default function withScanners (WrappedComponent) {
       render() {
         return (
           <ScannersContext.Consumer>
-            {(scanners) => <WrappedComponent scanners={scanners} {...this.props} />}
+            {({ scanners }) => <WrappedComponent scanners={scanners} {...this.props} />}
           </ScannersContext.Consumer>
         );
       }

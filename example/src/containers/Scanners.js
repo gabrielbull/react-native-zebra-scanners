@@ -70,7 +70,7 @@ class Scanners extends React.Component {
         this.updateScanner({ scanner_id: scannerId }, { active: false })
     }
 
-    updateScanner (scanner, data = null) {
+    updateScanner = (scanner, data = null) => {
         if (data === null) data = scanner
       const scannerIndex = this.state.scanners.findIndex(s => s.scanner_id === scanner.scanner_id)
       if (scannerIndex !== -1) {
@@ -90,7 +90,7 @@ class Scanners extends React.Component {
 
       render () {
           return (
-              <ScannersContext.Provider value={this.state.scanners}>
+              <ScannersContext.Provider value={{ scanners: this.state.scanners, updateScanner: this.updateScanner }}>
                 {this.props.children}
               </ScannersContext.Provider>
           )
