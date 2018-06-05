@@ -34,11 +34,16 @@
 
 - (SbtResult *)getScannerInfo:(int)scannerId withAttributes:(NSArray *)attributes {
     NSString *in_xml = [NSString stringWithFormat:@"<inArgs><scannerID>%d</scannerID><cmdArgs><arg-xml><attrib_list>%@</attrib_list></arg-xml></cmdArgs></inArgs>", scannerId, [attributes componentsJoinedByString:@","]];
-
+    
     NSMutableString *response = [[NSMutableString alloc] init];
     [response setString:@""];
     SBT_RESULT result = [self executeCommand:SBT_RSM_ATTR_GET aInXML:in_xml aOutXML:&response forScanner:scannerId];
     return [[SbtResult alloc] initWithResponse:result withResponse:response];
+}
+
+- (SBT_RESULT)performBeeperAction:(int)scannerId withActionValue:(int)actionValue {
+    NSString *in_xml = [NSString stringWithFormat:@"<inArgs><scannerID>%d</scannerID><cmdArgs><arg-int>%d</arg-int></cmdArgs></inArgs>", scannerId, actionValue];
+    return [self executeCommand:SBT_SET_ACTION aInXML:in_xml aOutXML:nil forScanner:scannerId];
 }
 
 - (SBT_RESULT)connect:(int)scannerId

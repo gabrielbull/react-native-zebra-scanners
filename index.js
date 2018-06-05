@@ -57,6 +57,14 @@ export default {
                 .catch((err) => reject(err))
         })
     },
+    
+    performBeeperAction: (scannerId, actionValue) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.performBeeperAction({ scannerId, actionValue })
+                .then(() => resolve())
+                .catch((err) => reject(err))
+        })
+    },
 
     connect: (scannerId) => {
         return new Promise((resolve, reject) => {

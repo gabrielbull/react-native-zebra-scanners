@@ -65,6 +65,11 @@ class Scanner extends React.Component {
             .catch(err => alert(err))
     }
 
+    handleBeepPress = () => {
+        ZebraScanners.performBeeperAction(this.props.scanner.scanner_id, this.state.beepCode)
+            .catch(err => alert(err))
+    }
+
   render () {
       const { scanner } = this.props
     return (
@@ -127,7 +132,7 @@ class Scanner extends React.Component {
                      this.setState({ beepCode })
                 }}
                  actionLabel='🔔'
-                 onActionPress={() => null}
+                 onActionPress={this.handleBeepPress}
             />
         )
     }

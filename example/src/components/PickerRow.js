@@ -42,7 +42,7 @@ class PickerRow extends React.Component {
                     </View>
                 </TouchableOpacity>
                 {actionLabel && onActionPress ? (
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={onActionPress}>
                         <View style={{ width: 60, height: 60, alignItems: 'center', justifyContent: 'center', marginLeft: 15 }}>
                             <Text style={{ fontSize: 30 }}>{actionLabel}</Text>
                         </View>

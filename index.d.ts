@@ -128,6 +128,9 @@ declare module "react-native-zebra-scanners" {
     export type RmdAttr = 533 | 534 | 140 | 145 | 6000 | 1 | 2 | 12 | 4 | 3 | 83 | 8 | 14 | 0 | 9 | 10 | 6 | 5 | 408 
         | 7 | 11 | 292 | 15 | 84 | 85 | 20012 | 535 | 89 | 90 | 91 | 95 | 96 | 290 | 291 | 326 | 611 | 592 | 338 | 339 
         | 340 | 227 | 294 | 617 | 618 | 581 | 293 | 573 | 574 | 1167 | 341 | 342 | 371;
+    
+    export type SbtBeepCode = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19
+        | 20 | 21 | 22 | 23 | 24 | 25 
 
     export type Scanner = {
         active: boolean
@@ -140,6 +143,8 @@ declare module "react-native-zebra-scanners" {
     };
 
     export function getScannerInfo(scannerId: number, attributes: Array<RmdAttr>): Promise<{[key: string]: string | number}>;
+
+    export function performBeeperAction(scannerId: number, actionValue: SbtBeepCode): Promise<void>;
 
     export function connect(scannerId: number): Promise<void>;
 

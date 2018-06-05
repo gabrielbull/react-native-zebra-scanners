@@ -39,6 +39,25 @@ RCT_REMAP_METHOD(getScannerInfo,
     }
 }
 
+RCT_REMAP_METHOD(performBeeperAction,
+                 params:(NSDictionary *)params
+                 performBeeperActionWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    int actionValue = (int) [[params objectForKey:@"actionValue"] integerValue];
+    SBT_RESULT result = [self.scannerSdk performBeeperAction:scannerId withActionValue:actionValue];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
+    }
+}
+
 RCT_REMAP_METHOD(connect,
                  params:(NSDictionary *)params
                  connectWithResolver:(RCTPromiseResolveBlock)resolve
