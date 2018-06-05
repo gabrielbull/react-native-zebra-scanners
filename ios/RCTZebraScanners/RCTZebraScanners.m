@@ -20,14 +20,14 @@ RCT_EXPORT_MODULE();
     return @{ @"sdkVersion": [self.scannerSdk sbtGetVersion] };
 }
 
-RCT_REMAP_METHOD(getScannerInfo,
+RCT_REMAP_METHOD(getAttributes,
                  params:(NSDictionary *)params
-                 getScannerInfoWithResolver:(RCTPromiseResolveBlock)resolve
+                 getAttributesWithResolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
     int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
     NSArray *attributes = [params objectForKey:@"attributes"];
-    SbtResult *res = [self.scannerSdk getScannerInfo:scannerId withAttributes:attributes];
+    SbtResult *res = [self.scannerSdk getAttributes:scannerId withAttributes:attributes];
     if (res.result == SBT_RESULT_SUCCESS) {
         resolve(res.response);
     } else {
@@ -39,14 +39,15 @@ RCT_REMAP_METHOD(getScannerInfo,
     }
 }
 
-RCT_REMAP_METHOD(performBeeperAction,
+RCT_REMAP_METHOD(setAttribute,
                  params:(NSDictionary *)params
-                 performBeeperActionWithResolver:(RCTPromiseResolveBlock)resolve
+                 setAttributeWithResolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
     int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
-    int actionValue = (int) [[params objectForKey:@"actionValue"] integerValue];
-    SBT_RESULT result = [self.scannerSdk performBeeperAction:scannerId withActionValue:actionValue];
+    int attribute = (int) [[params objectForKey:@"attribute"] integerValue];
+    char value = (char) [[params objectForKey:@"value"] charValue];
+    SBT_RESULT result = [self.scannerSdk setAttribute:scannerId withAttribute:attribute withValue:value];
     if (result == SBT_RESULT_SUCCESS) {
         resolve(@"");
     } else {
@@ -58,14 +59,158 @@ RCT_REMAP_METHOD(performBeeperAction,
     }
 }
 
-RCT_REMAP_METHOD(performLedAction,
+RCT_REMAP_METHOD(performAction,
                  params:(NSDictionary *)params
-                 performLedActionWithResolver:(RCTPromiseResolveBlock)resolve
+                 performActionWithResolver:(RCTPromiseResolveBlock)resolve
                  rejecter:(RCTPromiseRejectBlock)reject)
 {
     int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
     int actionValue = (int) [[params objectForKey:@"actionValue"] integerValue];
-    SBT_RESULT result = [self.scannerSdk performLedAction:scannerId withActionValue:actionValue];
+    SBT_RESULT result = [self.scannerSdk performAction:scannerId withActionValue:actionValue];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
+    }
+}
+
+RCT_REMAP_METHOD(performActionScanEnable,
+                 params:(NSDictionary *)params
+                 performActionScanEnableWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    SBT_RESULT result = [self.scannerSdk performActionScanEnable:scannerId];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
+    }
+}
+
+RCT_REMAP_METHOD(performActionScanDisable,
+                 params:(NSDictionary *)params
+                 performActionScanDisableWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    SBT_RESULT result = [self.scannerSdk performActionScanDisable:scannerId];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
+    }
+}
+
+RCT_REMAP_METHOD(performActionAimOn,
+                 params:(NSDictionary *)params
+                 performActionAimOnWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    SBT_RESULT result = [self.scannerSdk performActionAimOn:scannerId];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
+    }
+}
+
+RCT_REMAP_METHOD(performActionAimOff,
+                 params:(NSDictionary *)params
+                 performActionAimOffWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    SBT_RESULT result = [self.scannerSdk performActionAimOff:scannerId];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
+    }
+}
+
+RCT_REMAP_METHOD(performActionVibrationFeedback,
+                 params:(NSDictionary *)params
+                 performActionVibrationFeedbackWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    SBT_RESULT result = [self.scannerSdk performActionVibrationFeedback:scannerId];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
+    }
+}
+
+RCT_REMAP_METHOD(performActionTriggerPull,
+                 params:(NSDictionary *)params
+                 performActionTriggerPullWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    SBT_RESULT result = [self.scannerSdk performActionTriggerPull:scannerId];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
+    }
+}
+
+RCT_REMAP_METHOD(performActionTriggerRelease,
+                 params:(NSDictionary *)params
+                 performActionTriggerReleaseWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    SBT_RESULT result = [self.scannerSdk performActionTriggerRelease:scannerId];
+    if (result == SBT_RESULT_SUCCESS) {
+        resolve(@"");
+    } else {
+        reject(
+               [Serializer serializeResultErrorCode:result],
+               [Serializer serializeResultErrorMessage:result],
+               [NSError errorWithDomain:[Serializer serializeResultErrorMessage:result] code:result userInfo:nil]
+               );
+    }
+}
+
+RCT_REMAP_METHOD(performActionBarcodeMode,
+                 params:(NSDictionary *)params
+                 performActionBarcodeModeWithResolver:(RCTPromiseResolveBlock)resolve
+                 rejecter:(RCTPromiseRejectBlock)reject)
+{
+    int scannerId = (int) [[params objectForKey:@"scannerId"] integerValue];
+    SBT_RESULT result = [self.scannerSdk performActionBarcodeMode:scannerId];
     if (result == SBT_RESULT_SUCCESS) {
         resolve(@"");
     } else {

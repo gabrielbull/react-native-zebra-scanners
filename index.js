@@ -50,30 +50,94 @@ export {
 export default {
     sdkVersion: NativeModules.ZebraScanners.sdkVersion,
     
-    getScannerInfo: (scannerId, attributes) => {
+    getAttributes: (scannerId, attributes) => {
         return new Promise((resolve, reject) => {
-            NativeModules.ZebraScanners.getScannerInfo({ scannerId, attributes })
+            NativeModules.ZebraScanners.getAttributes({ scannerId, attributes })
                 .then((data) => resolve(parseXml(data)))
                 .catch((err) => reject(err))
         })
     },
     
-    performBeeperAction: (scannerId, actionValue) => {
+    setAttribute: (scannerId, attribute, value) => {
         return new Promise((resolve, reject) => {
-            NativeModules.ZebraScanners.performBeeperAction({ scannerId, actionValue })
+            NativeModules.ZebraScanners.setAttribute({ scannerId, attribute, value })
                 .then(() => resolve())
                 .catch((err) => reject(err))
         })
     },
     
-    performLedAction: (scannerId, actionValue) => {
+    performAction: (scannerId, actionValue) => {
         return new Promise((resolve, reject) => {
-            NativeModules.ZebraScanners.performLedAction({ scannerId, actionValue })
+            NativeModules.ZebraScanners.performAction({ scannerId, actionValue })
                 .then(() => resolve())
                 .catch((err) => reject(err))
         })
     },
 
+    performActionScanEnable: (scannerId) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.performActionScanEnable({ scannerId })
+                .then(() => resolve())
+                .catch((err) => reject(err))
+        })
+    },
+
+    performActionScanDisable: (scannerId) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.performActionScanDisable({ scannerId })
+                .then(() => resolve())
+                .catch((err) => reject(err))
+        })
+    },
+
+    performActionAimOn: (scannerId) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.performActionAimOn({ scannerId })
+                .then(() => resolve())
+                .catch((err) => reject(err))
+        })
+    },
+
+    performActionAimOff: (scannerId) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.performActionAimOff({ scannerId })
+                .then(() => resolve())
+                .catch((err) => reject(err))
+        })
+    },
+
+    performActionVibrationFeedback: (scannerId) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.performActionVibrationFeedback({ scannerId })
+                .then(() => resolve())
+                .catch((err) => reject(err))
+        })
+    },
+
+    performActionTriggerPull: (scannerId) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.performActionTriggerPull({ scannerId })
+                .then(() => resolve())
+                .catch((err) => reject(err))
+        })
+    },
+
+    performActionTriggerRelease: (scannerId) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.performActionTriggerRelease({ scannerId })
+                .then(() => resolve())
+                .catch((err) => reject(err))
+        })
+    },
+
+    performActionBarcodeMode: (scannerId) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.performActionBarcodeMode({ scannerId })
+                .then(() => resolve())
+                .catch((err) => reject(err))
+        })
+    },
+    
     connect: (scannerId) => {
         return new Promise((resolve, reject) => {
             NativeModules.ZebraScanners.connect({ scannerId })

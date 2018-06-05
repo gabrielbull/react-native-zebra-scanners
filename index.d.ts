@@ -144,11 +144,18 @@ declare module "react-native-zebra-scanners" {
         scanner_name: string
     };
 
-    export function getScannerInfo(scannerId: number, attributes: Array<RmdAttr>): Promise<{[key: string]: string | number}>;
+    export function getAttributes(scannerId: number, attributes: Array<RmdAttr>): Promise<{[key: string]: string | number}>;
+    export function setAttribute(scannerId: number, attribute: RmdAttr, value: string): Promise<void>;
 
-    export function performBeeperAction(scannerId: number, actionValue: SbtBeepCode): Promise<void>;
-
-    export function performLedAction(scannerId: number, actionValue: SbtLedCode): Promise<void>;
+    export function performAction(scannerId: number, actionValue: SbtBeepCode | SbtLedCode): Promise<void>;
+    export function performActionScanEnable(scannerId): Promise<void>;
+    export function performActionScanDisable(scannerId): Promise<void>;
+    export function performActionAimOn(scannerId): Promise<void>;
+    export function performActionAimOff(scannerId): Promise<void>;
+    export function performActionVibrationFeedback(scannerId): Promise<void>;
+    export function performActionTriggerPull(scannerId): Promise<void>;
+    export function performActionTriggerRelease(scannerId): Promise<void>;
+    export function performActionBarcodeMode(scannerId): Promise<void>;
 
     export function connect(scannerId: number): Promise<void>;
 
