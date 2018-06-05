@@ -163,16 +163,6 @@
     [RCTZebraScannersEvents onCommunicationSessionTerminated:scannerID];
 }
 
-- (void)blinkLEDOff
-{
-    NSLog(@"✳️✳️✳️ ARXXC: BLink LED off");
-}
-
-- (void)blinkLEDON
-{
-    NSLog(@"✳️✳️✳️ ARXXC: BLink LED on");
-}
-
 - (void) sbtEventBarcode:(NSString *)barcodeData barcodeType:(int)barcodeType fromScanner:(int)scannerID
 {
     // Deprecated. Use sbtEventBarcodeData
@@ -195,28 +185,6 @@
 
 - (void)sbtEventVideo:(NSData *)videoFrame fromScanner:(int)scannerID {
     NSLog(@"✳️✳️✳️ ARXXC: Event video data");
-}
-
-- (BOOL)firmwareDidUpdate
-{
-    NSLog(@"✳️✳️✳️ ARXXC: Firmware did update");
-    return false;
-}
-
-- (int)previousScannerId
-{
-    NSLog(@"✳️✳️✳️ ARXXC: Previous scanner id");
-    return 1;
-}
-
-- (void)setFirmwareDidUpdate:(BOOL)updateStatus
-{
-    NSLog(@"✳️✳️✳️ ARXXC: Se firmware did update");
-}
-
-- (void)previousScannerpreviousScanner:(int)scannerIdStatus
-{
-    NSLog(@"✳️✳️✳️ ARXXC: Se firmware did update");
 }
 
 @end
