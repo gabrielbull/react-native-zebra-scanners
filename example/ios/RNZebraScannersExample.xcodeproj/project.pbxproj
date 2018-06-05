@@ -297,6 +297,13 @@
 			remoteGlobalIDString = 358F4ED71D1E81A9004DF814;
 			remoteInfo = RCTBlob;
 		};
+		C07D43A920C636A40041E069 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = C0EDC72920B70FD500B786FE /* RCTZebraScanners.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = C085CFB5206F1DF5006AE17C;
+			remoteInfo = RCTZebraScanners;
+		};
 		C0EDC74220B70FD500B786FE /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = C0EDC72920B70FD500B786FE /* RCTZebraScanners.xcodeproj */;
@@ -617,6 +624,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				C07D43AA20C636A40041E069 /* PBXTargetDependency */,
 			);
 			name = RNZebraScannersExample;
 			productName = "Hello World";
@@ -1045,6 +1053,11 @@
 			isa = PBXTargetDependency;
 			target = 13B07F861A680F5B00A75B9A /* RNZebraScannersExample */;
 			targetProxy = 00E356F41AD99517003FC87E /* PBXContainerItemProxy */;
+		};
+		C07D43AA20C636A40041E069 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RCTZebraScanners;
+			targetProxy = C07D43A920C636A40041E069 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
