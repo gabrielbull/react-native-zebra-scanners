@@ -65,6 +65,14 @@ export default {
                 .catch((err) => reject(err))
         })
     },
+    
+    performLedAction: (scannerId, actionValue) => {
+        return new Promise((resolve, reject) => {
+            NativeModules.ZebraScanners.performLedAction({ scannerId, actionValue })
+                .then(() => resolve())
+                .catch((err) => reject(err))
+        })
+    },
 
     connect: (scannerId) => {
         return new Promise((resolve, reject) => {

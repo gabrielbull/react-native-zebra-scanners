@@ -46,6 +46,11 @@
     return [self executeCommand:SBT_SET_ACTION aInXML:in_xml aOutXML:nil forScanner:scannerId];
 }
 
+- (SBT_RESULT)performLedAction:(int)scannerId withActionValue:(int)actionValue {
+    NSString *in_xml = [NSString stringWithFormat:@"<inArgs><scannerID>%d</scannerID><cmdArgs><arg-int>%d</arg-int></cmdArgs></inArgs>", scannerId, actionValue];
+    return [self executeCommand:SBT_SET_ACTION aInXML:in_xml aOutXML:nil forScanner:scannerId];
+}
+
 - (SBT_RESULT)connect:(int)scannerId
 {
     return [self.sbtSdk sbtEstablishCommunicationSession:scannerId];

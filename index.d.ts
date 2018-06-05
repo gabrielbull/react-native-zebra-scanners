@@ -132,6 +132,8 @@ declare module "react-native-zebra-scanners" {
     export type SbtBeepCode = 0 | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12 | 13 | 14 | 15 | 16 | 17 | 18 | 19
         | 20 | 21 | 22 | 23 | 24 | 25 
 
+    export type SbtLedCode = 42 | 43 | 45 | 46 | 47 | 48
+
     export type Scanner = {
         active: boolean
         auto_communication_session_reestablishment: boolean,
@@ -145,6 +147,8 @@ declare module "react-native-zebra-scanners" {
     export function getScannerInfo(scannerId: number, attributes: Array<RmdAttr>): Promise<{[key: string]: string | number}>;
 
     export function performBeeperAction(scannerId: number, actionValue: SbtBeepCode): Promise<void>;
+
+    export function performLedAction(scannerId: number, actionValue: SbtLedCode): Promise<void>;
 
     export function connect(scannerId: number): Promise<void>;
 

@@ -11,6 +11,7 @@
 - (NSString *)sbtGetVersion;
 - (SbtResult *)getScannerInfo:(int)scannerId withAttributes:(NSArray *)attributes;
 - (SBT_RESULT)performBeeperAction:(int)scannerId withActionValue:(int)actionValue;
+- (SBT_RESULT)performLedAction:(int)scannerId withActionValue:(int)actionValue;
 - (SBT_RESULT)connect:(int)scannerId;
 - (SBT_RESULT)disconnect:(int)scannerId;
 - (SBT_RESULT)setAutoReconnectOption:(int)scannerId enableOption:(BOOL)enable;

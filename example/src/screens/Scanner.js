@@ -1,15 +1,24 @@
 import * as React from 'react'
 import { View, FlatList, Text, ScrollView, Image, ActivityIndicator } from 'react-native'
-import { Header, HeaderButton, ScannerAttribute, Button, SwitchRow, PickerRow } from '../components'
+import { Header, HeaderButton, ScannerAttribute, Button, SwitchRow, PickerRow, Row, IconButton } from '../components'
 import { withRouter, withScanner } from '../containers'
-import ZebraScanners, { RMD_ATTR_FRMWR_VERSION, RMD_ATTR_MFD, RMD_ATTR_MODEL_NUMBER, RMD_ATTR_SERIAL_NUMBER } from 'react-native-zebra-scanners'
+import ZebraScanners, {
+    RMD_ATTR_FRMWR_VERSION, RMD_ATTR_MFD, RMD_ATTR_MODEL_NUMBER, RMD_ATTR_SERIAL_NUMBER, 
+    RMD_ATTR_VALUE_ACTION_LED_GREEN_ON, RMD_ATTR_VALUE_ACTION_LED_GREEN_OFF, RMD_ATTR_VALUE_ACTION_LED_RED_ON, 
+    RMD_ATTR_VALUE_ACTION_LED_RED_OFF, RMD_ATTR_VALUE_ACTION_LED_YELLOW_ON, RMD_ATTR_VALUE_ACTION_LED_YELLOW_OFF
+} from 'react-native-zebra-scanners'
 import beepCodes from '../data/beepCodes'
 
 class Scanner extends React.Component {
     state = {
         connecting: false,
         attributes: {},
-        beepCode: beepCodes[0].value
+        beepCode: beepCodes[0].value,
+        led: {
+            green: false,
+            yellow: false,
+            red: false
+        }
     }
 
     componentDidMount () {
@@ -70,7 +79,34 @@ class Scanner extends React.Component {
             .catch(err => alert(err))
     }
 
-  render () {
+    handleGreenLedPress = () => {
+        const greenLed = !this.state.led.green
+        this.setState({ led: { ...this.state.led, green: greenLed } }, () => {
+            let action = greenLed ? RMD_ATTR_VALUE_ACTION_LED_GREEN_OFF : RMD_ATTR_VALUE_ACTION_LED_GREEN_ON
+            ZebraScanners.performLedAction(this.props.scanner.scanner_id, action)
+                .catch(err => alert(err))
+        })
+    }
+
+    handleYellowLedPress = () => {
+        const yellowLed = !this.state.led.yellow
+        this.setState({ led: { ...this.state.led, yellow: yellowLed } }, () => {
+            let action = yellowLed ? RMD_ATTR_VALUE_ACTION_LED_YELLOW_OFF : RMD_ATTR_VALUE_ACTION_LED_YELLOW_ON
+            ZebraScanners.performLedAction(this.props.scanner.scanner_id, action)
+                .catch(err => alert(err))
+        })
+    }
+
+    handleRedLedPress = () => {
+        const redLed = !this.state.led.red
+        this.setState({ led: { ...this.state.led, red: redLed } }, () => {
+            let action = redLed ? RMD_ATTR_VALUE_ACTION_LED_RED_OFF : RMD_ATTR_VALUE_ACTION_LED_RED_ON
+            ZebraScanners.performLedAction(this.props.scanner.scanner_id, action)
+                .catch(err => alert(err))
+        })
+    }
+
+    render () {
       const { scanner } = this.props
     return (
         <View style={{ flex: 1 }}>
@@ -84,6 +120,7 @@ class Scanner extends React.Component {
                 {this.props.scanner.active ? this.renderAttributes() : null}
                 {this.props.scanner.active ? this.renderReconnectOption() : null}
                 {this.props.scanner.active ? this.renderBeeper() : null}
+                {this.props.scanner.active ? this.renderLED() : null}
             </ScrollView>
         </View>                            
     )
@@ -127,12 +164,24 @@ class Scanner extends React.Component {
                  label='Beeper'
                  items={beepCodes}
                  selectedValue={this.state.beepCode}
-                 onValueChange={(beepCode) => {
-                     console.log(beepCode)
-                     this.setState({ beepCode })
-                }}
+                 onValueChange={(beepCode) => this.setState({ beepCode })}
                  actionLabel='🔔'
                  onActionPress={this.handleBeepPress}
+            />
+        )
+    }
+
+    renderLED () {
+        return (
+            <Row
+                 label='LED'
+                 details={(
+                    <React.Fragment>
+                        <IconButton onPress={this.handleGreenLedPress}>✳️</IconButton>
+                        <IconButton onPress={this.handleYellowLedPress}>✴️</IconButton>
+                        <IconButton onPress={this.handleRedLedPress}>🅾️</IconButton>
+                    </React.Fragment>
+                 )}
             />
         )
     }
