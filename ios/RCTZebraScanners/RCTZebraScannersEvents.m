@@ -5,6 +5,10 @@ NSString *const SCANNER_APPEARED = @"ZebraScanners/ScannerAppeared";
 NSString *const SCANNER_DISAPPEARED = @"ZebraScanners/ScannerDisappeard";
 NSString *const COMMUNICATION_SESSION_ESTABLISHED = @"ZebraScanners/CommunicationSessionEstablished";
 NSString *const COMMUNICATION_SESSION_TERMINATED = @"ZebraScanners/CommunicationSessionTerminated";
+NSString *const BARCODE_DATA_RECEIVED = @"ZebraScanners/BarcodeDataReceived";
+NSString *const FIRMWARE_UPDATE = @"ZebraScanners/FirmwareUpdate";
+NSString *const IMAGE_DATA_RECEIVED = @"ZebraScanners/ImageDataReceived";
+NSString *const VIDEO_FRAME_DATA_RECEIVED = @"ZebraScanners/VideoFrameDataReceived";
 
 @implementation RCTZebraScannersEvents
 
@@ -31,13 +35,17 @@ RCT_EXPORT_MODULE();
          @"SCANNER_APPEARED": SCANNER_APPEARED,
          @"SCANNER_DISAPPEARED": SCANNER_DISAPPEARED,
          @"COMMUNICATION_SESSION_ESTABLISHED": COMMUNICATION_SESSION_ESTABLISHED,
-         @"COMMUNICATION_SESSION_TERMINATED": COMMUNICATION_SESSION_TERMINATED
+         @"COMMUNICATION_SESSION_TERMINATED": COMMUNICATION_SESSION_TERMINATED,
+         @"BARCODE_DATA_RECEIVED": BARCODE_DATA_RECEIVED,
+         @"FIRMWARE_UPDATE": FIRMWARE_UPDATE,
+         @"IMAGE_DATA_RECEIVED": IMAGE_DATA_RECEIVED,
+         @"VIDEO_FRAME_DATA_RECEIVED": VIDEO_FRAME_DATA_RECEIVED
     };
 }
 
 - (NSArray<NSString *> *)supportedEvents
 {
-    return @[SCANNER_APPEARED, SCANNER_DISAPPEARED, COMMUNICATION_SESSION_ESTABLISHED, COMMUNICATION_SESSION_TERMINATED];
+    return @[SCANNER_APPEARED, SCANNER_DISAPPEARED, COMMUNICATION_SESSION_ESTABLISHED, COMMUNICATION_SESSION_TERMINATED, BARCODE_DATA_RECEIVED, FIRMWARE_UPDATE, IMAGE_DATA_RECEIVED, VIDEO_FRAME_DATA_RECEIVED];
 }
 
 - (void)startObserving {
@@ -78,6 +86,33 @@ RCT_EXPORT_MODULE();
 + (BOOL)onCommunicationSessionTerminated:(int)scannerID
 {
     [self postNotificationName:COMMUNICATION_SESSION_TERMINATED withPayload:@{@"scannerId": [NSNumber numberWithInt:scannerID]}];
+    return YES;
+}
+
++ (BOOL)onBarcodeData:(NSData*)barcodeData barcodeType:(int)barcodeType fromScanner:(int)scannerID
+{
+    [self postNotificationName:BARCODE_DATA_RECEIVED
+                   withPayload:@{
+                                 @"scannerId": [NSNumber numberWithInt:scannerID],
+                                 @"barcodeData": [DecodeBarcodeData decodeBarcodeData:barcodeData],
+                                 @"barcodeType": [NSNumber numberWithInt:barcodeType]
+                                 }];
+    return YES;
+}
+
++ (BOOL)onFirmwareUpdate:(FirmwareUpdateEvent *)fwUpdateEventObj
+{
+    [self postNotificationName:FIRMWARE_UPDATE withPayload:@{@"scanner": [Serializer serializeScanner:fwUpdateEventObj.scannerInfo]}];
+    return YES;
+}
+
++ (BOOL)onImageData:(NSData *)imageData fromScanner:(int)scannerID {
+    [self postNotificationName:IMAGE_DATA_RECEIVED withPayload:@{@"scannerId": [NSNumber numberWithInt:scannerID]}];
+    return YES;
+}
+
++ (BOOL)onVideoFrameData:(NSData *)videoFrame fromScanner:(int)scannerID {
+    [self postNotificationName:VIDEO_FRAME_DATA_RECEIVED withPayload:@{@"scannerId": [NSNumber numberWithInt:scannerID]}];
     return YES;
 }
 

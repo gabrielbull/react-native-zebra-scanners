@@ -23,6 +23,7 @@ class Scanners extends React.Component {
         ZebraScanners.addEventListener('SCANNER_DISAPPEARED', this.handleScannerDisappeared)    
         ZebraScanners.addEventListener('COMMUNICATION_SESSION_ESTABLISHED', this.handleCommunicationSessionEstablished)    
         ZebraScanners.addEventListener('COMMUNICATION_SESSION_TERMINATED', this.handleCommunicationSessionTerminated)
+        ZebraScanners.addEventListener('BARCODE_DATA_RECEIVED', this.handleBarcodeDataReceived)
     }
 
     componentDidLoad () {
@@ -36,6 +37,7 @@ class Scanners extends React.Component {
         ZebraScanners.removeEventListener('SCANNER_DISAPPEARED', this.handleScannerDisappeared)
         ZebraScanners.removeEventListener('COMMUNICATION_SESSION_ESTABLISHED', this.handleCommunicationSessionEstablished)    
         ZebraScanners.removeEventListener('COMMUNICATION_SESSION_TERMINATED', this.handleCommunicationSessionTerminated)    
+        ZebraScanners.removeEventListener('BARCODE_DATA_RECEIVED', this.handleBarcodeDataReceived)    
       }
     
       handleScannerAppeared = ({scanner}) => {
@@ -68,6 +70,10 @@ class Scanners extends React.Component {
 
     handleCommunicationSessionTerminated = ({scannerId}) => {
         this.updateScanner({ scanner_id: scannerId }, { active: false })
+    }
+
+    handleBarcodeDataReceived = ({ scannerId, barcodeData, barcodeType }) => {
+        console.log(scannerId, barcodeData, barcodeType)
     }
 
     updateScanner = (scanner, data = null) => {

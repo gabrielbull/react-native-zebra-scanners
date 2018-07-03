@@ -170,21 +170,21 @@
 
 - (void)sbtEventBarcodeData:(NSData*)barcodeData barcodeType:(int)barcodeType fromScanner:(int)scannerID
 {
-    NSLog(@"✳️✳️✳️ ARXXC: Event barcode data");
+    [RCTZebraScannersEvents onBarcodeData:barcodeData barcodeType:barcodeType fromScanner:scannerID];
 }
 
 - (void)sbtEventFirmwareUpdate:(FirmwareUpdateEvent *)fwUpdateEventObj
 {
-    NSLog(@"✳️✳️✳️ ARXXC: Event firmware update");
+    [RCTZebraScannersEvents onFirmwareUpdate:fwUpdateEventObj];
 }
 
 - (void)sbtEventImage:(NSData *)imageData fromScanner:(int)scannerID {
-    NSLog(@"✳️✳️✳️ ARXXC: Event image data");
+    [RCTZebraScannersEvents onImageData:imageData fromScanner:scannerID];
 }
 
 
 - (void)sbtEventVideo:(NSData *)videoFrame fromScanner:(int)scannerID {
-    NSLog(@"✳️✳️✳️ ARXXC: Event video data");
+    [RCTZebraScannersEvents onVideoFrameData:videoFrame fromScanner:scannerID];
 }
 
 @end

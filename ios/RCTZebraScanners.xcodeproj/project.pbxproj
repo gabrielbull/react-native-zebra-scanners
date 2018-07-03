@@ -18,6 +18,7 @@
 		C085D09A206F26E6006AE17C /* libsymbolbt-sdk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C085D099206F26E6006AE17C /* libsymbolbt-sdk.a */; };
 		C085D09D206F2816006AE17C /* ExternalAccessory.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C085D09C206F2816006AE17C /* ExternalAccessory.framework */; };
 		C085D09F206F281E006AE17C /* CoreBluetooth.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C085D09E206F281E006AE17C /* CoreBluetooth.framework */; };
+		C09E602A20EBF706004BAA1C /* DecodeBarcodeData.m in Sources */ = {isa = PBXBuildFile; fileRef = C09E602920EBF706004BAA1C /* DecodeBarcodeData.m */; };
 		C0CD5BDE20B72C54001AC368 /* RCTZebraScannersEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = C0CD5BDD20B72C54001AC368 /* RCTZebraScannersEvents.m */; };
 		C0CD5BE120B74E98001AC368 /* Serializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C0CD5BE020B74E98001AC368 /* Serializer.m */; };
 		C0EF927A20B8DFDC008E0B34 /* SbtResult.m in Sources */ = {isa = PBXBuildFile; fileRef = C0EF927920B8DFDC008E0B34 /* SbtResult.m */; };
@@ -52,6 +53,8 @@
 		C085D099206F26E6006AE17C /* libsymbolbt-sdk.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libsymbolbt-sdk.a"; path = "symbolbt-sdk/libsymbolbt-sdk.a"; sourceTree = "<group>"; };
 		C085D09C206F2816006AE17C /* ExternalAccessory.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExternalAccessory.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/ExternalAccessory.framework; sourceTree = DEVELOPER_DIR; };
 		C085D09E206F281E006AE17C /* CoreBluetooth.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreBluetooth.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS11.3.sdk/System/Library/Frameworks/CoreBluetooth.framework; sourceTree = DEVELOPER_DIR; };
+		C09E602820EBF706004BAA1C /* DecodeBarcodeData.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DecodeBarcodeData.h; sourceTree = "<group>"; };
+		C09E602920EBF706004BAA1C /* DecodeBarcodeData.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DecodeBarcodeData.m; sourceTree = "<group>"; };
 		C0CD5BDC20B72C54001AC368 /* RCTZebraScannersEvents.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = RCTZebraScannersEvents.h; sourceTree = "<group>"; };
 		C0CD5BDD20B72C54001AC368 /* RCTZebraScannersEvents.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = RCTZebraScannersEvents.m; sourceTree = "<group>"; };
 		C0CD5BDF20B74E98001AC368 /* Serializer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Serializer.h; sourceTree = "<group>"; };
@@ -101,6 +104,8 @@
 				C029295020B3B0AC00190618 /* BarcodeGen128.m */,
 				C029294D20B3B08100190618 /* BarcodeImage.h */,
 				C029294C20B3B08100190618 /* BarcodeImage.m */,
+				C09E602820EBF706004BAA1C /* DecodeBarcodeData.h */,
+				C09E602920EBF706004BAA1C /* DecodeBarcodeData.m */,
 				C085CFB9206F1DF5006AE17C /* RCTZebraScanners.h */,
 				C085CFBA206F1DF5006AE17C /* RCTZebraScanners.m */,
 				C0CD5BDC20B72C54001AC368 /* RCTZebraScannersEvents.h */,
@@ -183,6 +188,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C09E602A20EBF706004BAA1C /* DecodeBarcodeData.m in Sources */,
 				C0CD5BDE20B72C54001AC368 /* RCTZebraScannersEvents.m in Sources */,
 				C0CD5BE120B74E98001AC368 /* Serializer.m in Sources */,
 				C029294E20B3B08100190618 /* BarcodeImage.m in Sources */,
